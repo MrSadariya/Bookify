@@ -1,0 +1,87 @@
+.cartbox{
+    height: 22vh;
+    width:60vw;
+    background-color: #101116;
+    border-radius: 1rem;
+    margin:1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    color: white;
+}
+
+.book-image{
+    height:18vh;
+    width:10vw;
+    background-color: red;
+    border-radius: 1rem;
+    margin-left: 1rem;
+}
+
+.details{
+    height:18vh;
+    width:25vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+.cart-counter{
+    height:5vh;
+    width:10vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 0.5rem;
+    font-size: 2rem;
+}
+
+.increment{
+    height:100%;
+    width:25%;
+    font-size: 2rem;
+    border-radius: 0.3rem;
+    border: none;
+    background-color: white;
+    color:black;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+}
+
+.increment:hover{
+    background-color: green;
+    color: white;
+}
+
+.cart-counter div{
+    width:35%;
+    height:100%;
+    background-color: white;
+    color:black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.3rem;
+}
+
+.remove-btn{
+    height:100%;
+    width:25%;
+    font-size: 1.5rem;
+    border-radius: 0.3rem;
+    border: none;
+    background-color: white;
+    color:red;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+}
+
+.remove-btn:hover{
+    background-color: red;
+    color: white;
+}
