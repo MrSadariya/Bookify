@@ -27,10 +27,11 @@ const Bookbox=(props)=>{
     return(<div className="bookbox">
       <div className="bookimgdiv"></div>
       <div className="bookdetaildiv">
-      <h1>{props.BookName}</h1>
-      <h2>{props.AuthorName}</h2>
-      <h2>Price:{props.Price}</h2>
-      <h2>Years Used:{props.YearsUsed}</h2>
+      <h2>{props.BookName}</h2>
+      <h3>{props.AuthorName}</h3>
+      <h3>Years Used:{props.YearsUsed}</h3>
+      <h2>${props.Price}</h2>
+      
       
       </div>
 
