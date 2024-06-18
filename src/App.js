@@ -11,7 +11,7 @@ import {UserContext} from './Contexts/UserContext';
 import Profile1 from "./Components/Profile1";
 import NotLoggedinPage from "./Components/NotLoggedinPage";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBookOpen} from '@fortawesome/free-solid-svg-icons';
+import {faBookOpen,faChevronDown,faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import Cartbox from "./Components/Cartbox";
 
 
@@ -22,8 +22,10 @@ const Home=()=>{
     const [bookdata,setbookdata]=useState([]);
 
     useEffect(()=>{
-     axios.get(`http://localhost:8000`).then((res)=>{
-        setbookdata(res.data)});
+        axios.get(`http://localhost:8000`).then((res)=>{
+            setbookdata(res.data);
+        })
+
     },[])
 
     return(<div className="books-container">
@@ -62,13 +64,13 @@ const MainHome=()=>{
             </div>
         <div className="types" style={{color:"black"}}>
                 <div className="row">
-                    <div className="fiction real-fiction" style={{color:"white"}}>Fiction</div>
-                    <div className="non-fiction real-nonfiction" style={{color:"white"}}>Non-Fiction</div>
+                    <div className="fiction real-fiction" style={{color:"white"}}><NavLink className="link" to="/home/fictional">Fiction</NavLink>  </div>
+                    <div className="non-fiction real-nonfiction" style={{color:"white"}}><NavLink className="link" to="/home/nonfictional">NonFictional</NavLink> </div>
                 </div>
 
                 <div className="row">
-                    <div className="educational real-educational" style={{color:"white"}}>Educational</div>
-                    <div className="magazine real-magazine" style={{color:"white"}}>Magazines</div>
+                    <div className="educational real-educational" style={{color:"white"}}><NavLink className="link" to="/home/educational">Educational</NavLink> </div>
+                    <div className="magazine real-magazine" style={{color:"white"}}><NavLink className="link" to="/home">Books</NavLink> </div>
                 </div>
             </div>
 
@@ -88,6 +90,10 @@ const Profile=()=>{
     const [BooksSold,setBooksSold]=useState(0);
     const [AmountEarned,setAmountEarned]=useState(0);
     const [BooksBought,setBooksBought]=useState(0);
+    const [displaySold,setdisplaySold]=useState("none");
+    const [displayPending,setdisplayPending]=useState("none");
+    const [booksold,setbooksold]=useState([]);
+    const [bookpending,setbookpending]=useState([]);
 
     useEffect(()=>{
         axios.get(`http://localhost:8000/getprofile/${userdata.id}`)
@@ -99,7 +105,29 @@ const Profile=()=>{
                 setAmountEarned(res.data.MoneyEarned);
             }
         });
+        axios.get(`http://localhost:8000/bookpending/${userdata.id}`)
+        .then((res)=>{
+            setbookpending(res.data);
+        });
+
+        axios.get(`http://localhost:8000/booksold/${userdata.id}`)
+        .then((res)=>{
+            console.log(res.data);
+            setbooksold(res.data);
+        })
+
     },[userdata.id])
+
+    function handleDropdown(){
+        let newval= displaySold==="none"?"block":"none";
+        setdisplaySold(newval);
+    }
+
+    function handlePending(){
+        let newval= displayPending==="none"?"block":"none";
+        setdisplayPending(newval);
+
+    }
      
     return(<div className="profilediv">
        <div className="profile-main">
@@ -114,8 +142,24 @@ const Profile=()=>{
                 <div className="bookcount-div"> <div style={{fontWeight:"500"}}>Books Bought</div> <div style={{fontWeight:"bold",fontSize:"3.5rem"}}>{BooksBought}</div></div>
             </div>
         </div>
+       </div>
 
-        
+       <div className="userHistory">
+
+        <div className="booksolddropdown">
+            <button onClick={handleDropdown}>Books Sold {displaySold==="none"?<FontAwesomeIcon icon={faChevronDown} />:<FontAwesomeIcon icon={faChevronUp} />} </button>
+            <div style={{display:`${displaySold}`}} className="booksold-content">
+                {booksold.map((book)=><div>{book._doc.BookName}<span style={{fontSize:"1rem",marginLeft:"1rem"}}>-{book._doc.AuthorName}</span></div>)}
+                
+            </div>
+        </div>
+
+        <div className="booksolddropdown">
+            <button onClick={handlePending}>Books Pending {displayPending==="none"?<FontAwesomeIcon icon={faChevronDown} />:<FontAwesomeIcon icon={faChevronUp} />}</button>
+            <div style={{display:`${displayPending}`}} className="booksold-content">
+                 {bookpending.map((book)=><div >{book.BookName}<span style={{fontSize:"1rem",marginLeft:"1rem"}}>-{book.AuthorName}</span></div>)}  
+            </div>
+        </div>
        </div>
     </div>);
     
@@ -323,17 +367,17 @@ const DefaultHome=()=>{
     return(<div className="app">
         <Navbar/>
             <div className="content">
-            {/* <Dashboard/> */}
-            {userdata.id==="1"?<div></div>:<Dashboard/>}
+            <Dashboard/>
+            {/* {userdata.id==="1"?<div></div>:<Dashboard/>} */}
             <div className="component" >
                <Routes>
                     <Route  path="/" element={<Home />}/>
                     <Route path="cart" element={userdata.id==='1'?<NotLoggedinPage/>:<Cart />}/>
                     <Route path="profile" element={userdata.id==="1"?<NotLoggedinPage/>:<Profile/>}/>
                     <Route path="sellbook" element={userdata.id==="1"?<NotLoggedinPage/>:<SellBook/>}/>
-                    <Route path="fictional" element={userdata.id==="1"?<NotLoggedinPage/>:<FictionalPage/>}/>
-                    <Route path="nonfictional" element={userdata.id==="1"?<NotLoggedinPage/>:<NonFictionalPage/>}/>
-                    <Route path="educational" element={userdata.id==="1"?<NotLoggedinPage/>:<Educational/>}/>
+                    <Route path="fictional" element={<FictionalPage/>}/>
+                    <Route path="nonfictional" element={<NonFictionalPage/>}/>
+                    <Route path="educational" element={<Educational/>}/>
                 </Routes>
             </div>
     </div></div>);

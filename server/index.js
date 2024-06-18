@@ -26,6 +26,8 @@ app.get("/",async(req,res)=>{
     return res.json(bookdata);
 })
 
+
+
 app.get("/Books/:type",async(req,res)=>{
     let type=req.params.type;
     const fictionalbookdata=await BooksInfo.find({BookType:type});
@@ -92,8 +94,13 @@ app.post("/additem/:id",async(req,res)=>{
     }
     let user=await MERNUser.findOne({_id:id});
     let book=await BooksInfo.findOne({_id:bookid});
-    user.MyCart.push({...book,count:1});
-    await user.save();
+    let arr=user.MyCart;
+    let idx=arr.findIndex((ele)=>ele._doc._id==bookid);
+    if(idx===-1){
+        user.MyCart.push({...book,count:1});
+        await user.save();
+    }
+    
     return;
 })
 
@@ -105,7 +112,7 @@ app.get("/getprofile/:id",async(req,res)=>{
     if (mongoose.Types.ObjectId.isValid(id)) {
         const objectId =new mongoose.Types.ObjectId(id);
         let user=await MERNUser.findOne({_id:objectId});
-        return res.json({FullName:user.FullName,Email:user.Email,BooksBought:user.BooksBought,MoneyEarned:user.MoneyEarned,BooksSold:user.BooksSold});
+        return res.json({FullName:user.FullName,Email:user.Email,BooksBought:user.BooksBought,MoneyEarned:user.MoneyEarned,BooksSold:user.BooksSold.length});
     } else {
         return res.json({error:"Error"});
     }
@@ -120,7 +127,7 @@ app.post("/handlenewuser",async(req,res)=>{
    }
    await MERNUser.create({FullName:body.FullName,Email:body.Email,Password:body.Password})
    .then(()=>{
-    return res.json({newuser:true});
+    return res.redirect("http://localhost:3000/login");
    }).catch((err)=>{
     console.log("Error:",err);
     return res.json("null");
@@ -182,21 +189,30 @@ app.post("/cart/handlecheckout/:id",async(req,res)=>{
     if(mongoose.Types.ObjectId.isValid(id)){
         let user=await MERNUser.findOne({_id:id});
         
-        let bookbuy=user.MyCart.length;
+        
         for(let i=0;i<user.MyCart.length;i++){
             let seller=await MERNUser.findOne({Email:user.MyCart[i]._doc.SellerEmail});
-            seller.BooksSold+=1;
+            seller.BooksSold.push(user.MyCart[i]);
             seller.MoneyEarned+=user.MyCart[i]._doc.Price;
             await seller.save();
             await BooksInfo.deleteOne({_id:user.MyCart[i]._doc._id});
         }
 
-        user.BooksBought+=bookbuy;
+        user.BooksBought+=user.MyCart.length;
         user.MyCart=[];
         await user.save();
         return;
     }
     return;
+})
+
+app.get("/booksold/:id",async(req,res)=>{
+    let id=req.params.id;
+    if(mongoose.Types.ObjectId.isValid(id)){
+        let user=await MERNUser.findOne({_id:id});
+        return res.json(user.BooksSold);
+    }
+    return res.json({error:"Some Error"});
 })
 
 app.post("/booksell/:id",async(req,res)=>{
@@ -208,6 +224,21 @@ app.post("/booksell/:id",async(req,res)=>{
     }
 
     return res.redirect("http://localhost:3000/home");
+})
+
+app.get("/bookpending/:id",async (req,res)=>{
+    let id=req.params.id;
+    if(mongoose.Types.ObjectId.isValid(id)){
+        let user=await MERNUser.findOne({_id:id});
+        if(user){
+            let books=await BooksInfo.find({SellerEmail:user.Email});
+            return res.json(books);
+        }else{
+            return res.json({error:"No Such User"});
+        }
+    }else{
+        return res.json({error:"Not Valid Id"});
+    }
 })
 
 app.listen(PORT,()=>console.log("Server running at PORT:",PORT));

@@ -29,8 +29,7 @@ const MERNUserSchema=new mongoose.Schema({
         default:0
     },
     BooksSold:{
-        type:Number,
-        default:0
+        type:Array,
     }
 });
 
