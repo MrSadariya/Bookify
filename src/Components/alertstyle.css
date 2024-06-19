@@ -1,0 +1,51 @@
+.alert-back{
+    position: fixed;
+    top:0;
+    left:0;
+    height: 100vh;
+    width:100vw;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+
+}
+
+.alert-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    height:30vh;
+    width:40vw;
+    background-color: #101116;
+    color:white;
+    border-radius: 1rem;
+    z-index: 1000;
+    border: 0.5px solid white;
+}
+
+.alert-box button{
+    position: absolute;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    top:0;
+    right:0;
+    height:2rem;
+    width:2rem;
+    background-color: white;
+    color:red;
+    border: none;
+    border-radius: 0.33rem;
+    font-size: 1.3rem;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+}
+
+.alert-box button:hover{
+    background-color: red;
+    color: white;
+}

@@ -4,10 +4,12 @@ import {UserContext} from'../Contexts/UserContext';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
+import { AlertContext } from "../Contexts/AlertContext";
 
 const Bookbox=(props)=>{
 
   const userdata=useContext(UserContext);
+  const alert=useContext(AlertContext);
 
  function handleAddItem(){
   
@@ -21,6 +23,7 @@ const Bookbox=(props)=>{
     });
 
   }
+  alert.setshowalert("block");
 
  }
 

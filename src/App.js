@@ -13,6 +13,7 @@ import NotLoggedinPage from "./Components/NotLoggedinPage";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBookOpen,faChevronDown,faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import Cartbox from "./Components/Cartbox";
+import Alert from "./Components/Alert";
 
 
 
@@ -366,6 +367,7 @@ const DefaultHome=()=>{
 
     return(<div className="app">
         <Navbar/>
+        <Alert/>
             <div className="content">
             <Dashboard/>
             {/* {userdata.id==="1"?<div></div>:<Dashboard/>} */}
