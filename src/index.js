@@ -10,11 +10,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <UserContextProvider>
-      <AlertContextProvider>
+    <AlertContextProvider>
     <App/>
     </AlertContextProvider>
     </UserContextProvider>
     </BrowserRouter>
   </React.StrictMode>
-);
+)
 
