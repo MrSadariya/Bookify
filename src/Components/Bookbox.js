@@ -24,6 +24,7 @@ const Bookbox=(props)=>{
 
   }
   alert.setshowalert("block");
+  alert.setmsg("Book is added to your cart.");
 
  }
 

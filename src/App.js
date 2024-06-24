@@ -14,6 +14,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBookOpen,faChevronDown,faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import Cartbox from "./Components/Cartbox";
 import Alert from "./Components/Alert";
+import { CurrentContext } from "./Contexts/CurrentContext";
+import { AlertContext } from "./Contexts/AlertContext";
 
 
 
@@ -21,16 +23,33 @@ const Home=()=>{
     
     const userdata=useContext(UserContext);
     const [bookdata,setbookdata]=useState([]);
+    const curr=useContext(CurrentContext);
 
     useEffect(()=>{
+        curr.setcurrent("home");
         axios.get(`http://localhost:8000`).then((res)=>{
             setbookdata(res.data);
         })
 
     },[])
 
-    return(<div className="books-container">
+    return(
+    <div className="books-container">
+        <h1 style={{marginTop:"2rem"}}>Buy Books of Your Choice & Category</h1>
+        <div className="bestsellers">
+            
+            <div className="best-container">
+                <div ></div>
+                <div></div>
+                <div ></div>
+                <div ></div>
+                <div ></div>
+                <div></div>
+            </div>
+        </div>
         {bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
+
+        <h2 style={{marginTop:"5rem",marginBottom:"5rem"}}>Every book is a new beginning - start yours today!</h2>
     </div>);
 }
 
@@ -95,8 +114,10 @@ const Profile=()=>{
     const [displayPending,setdisplayPending]=useState("none");
     const [booksold,setbooksold]=useState([]);
     const [bookpending,setbookpending]=useState([]);
+    const curr=useContext(CurrentContext);
 
     useEffect(()=>{
+        curr.setcurrent("profile");
         axios.get(`http://localhost:8000/getprofile/${userdata.id}`)
         .then((res)=>{
             if(!res.data.error){
@@ -204,13 +225,18 @@ const Cart=()=>{
     const [cart,setcart]=useState([]);
     const [items,setitems]=useState(0);
     const [bill,setbill]=useState(0);
+    const curr=useContext(CurrentContext);
+    const alert=useContext(AlertContext);
     
 
     function handleCheckout(){
+        alert.setshowalert("block");
+        alert.setmsg("You Successfully bought the books . Keep Purchasing!!");
         axios.post(`http://localhost:8000/cart/handlecheckout/${userdata.id}`).catch((err)=>console.log(err));
     }
 
     useEffect(()=>{
+        curr.setcurrent("cart");
         axios.get(`http://localhost:8000/cart/${userdata.id}`)
         .then((res)=>{
             if(!res.data.error){
@@ -268,45 +294,67 @@ const Cart=()=>{
 const FictionalPage=()=>{
 
     const [bookdata,setbookdata]=useState([]);
+    const curr=useContext(CurrentContext);
 
     useEffect(()=>{
+        curr.setcurrent("fictional");
         axios.get("http://localhost:8000/Books/Fictional").then((res)=>setbookdata(res.data)).catch((err)=>console.log(err));
     },[])
 
-    return(<div className="books-container">
+    return(
+    <div style={{minHeight:"calc(100vh - 60px)",width:"90vw",display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <h2 style={{marginTop:"3rem",marginBottom:"3rem"}}>Escape reality-immerse yourself in our gripping fiction tales!</h2>
+        <div className="books-container">
+        
     {bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
-</div>);
+
+</div></div>);
 }
 
 const NonFictionalPage=()=>{
 
     const [bookdata,setbookdata]=useState([]);
+    const curr=useContext(CurrentContext);
 
     useEffect(()=>{
+        curr.setcurrent("nonfictional");
         axios.get("http://localhost:8000/Books/NonFictional").then((res)=>setbookdata(res.data)).catch((err)=>console.log(err));
     },[])
 
-    return(<div className="books-container">
+    return(<div style={{minHeight:"calc(100vh - 60px)",width:"90vw",display:"flex",flexDirection:"column",alignItems:"center"}}>
+         <h2 style={{marginTop:"3rem",marginBottom:"3rem"}}>Empower your mind with real stories and facts - shop our non-fiction selection!</h2>
+    <div className="books-container">
     {bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
-</div>);
+</div></div>);
 }
 
 const Educational=()=>{
 
     const [bookdata,setbookdata]=useState([]);
+    const curr=useContext(CurrentContext);
 
     useEffect(()=>{
+        curr.setcurrent("educational");
+
         axios.get("http://localhost:8000/Books/Educational").then((res)=>setbookdata(res.data)).catch((err)=>console.log(err));
     },[])
 
-    return(<div className="books-container">
+    return(<div style={{minHeight:"calc(100vh - 60px)",width:"90vw",display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <h2 style={{marginTop:"3rem",marginBottom:"3rem"}}>Ignite your curiosity - unlock knowledge with our educational books!</h2>
+    
+    <div className="books-container">
     {bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
-</div>);
+</div></div>);
 }
 
 const SellBook=()=>{
     
     const userdata=useContext(UserContext);
+    const curr=useContext(CurrentContext);
+
+    useEffect(()=>{
+        curr.setcurrent("sellbook");
+    },[])
 
     return(<div className="sellbookdiv">
         <form action={`http://localhost:8000/booksell/${userdata.id}`} method="post">

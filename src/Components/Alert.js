@@ -13,7 +13,7 @@ const Alert=(props)=>{
     return(<div className="alert-back" style={{display:`${alert.showalert}`}}>
     <div className="alert-box">
         <h1>Hurray!!</h1>
-          <h2>Book is Added to your Cart.</h2>
+          <h2>{alert.msg}</h2>
           <button onClick={handleCancel}>X</button>
     </div>
     </div>
