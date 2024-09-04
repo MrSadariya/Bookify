@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/sadar/example/server",
-      "program": "c:/Users/sadar/example/server/build/Debug/outDebug",
+      "cwd": "c:/Users/sadar/example/src",
+      "program": "c:/Users/sadar/example/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

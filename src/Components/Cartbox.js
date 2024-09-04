@@ -9,7 +9,6 @@ import axios from 'axios';
     const userdata=useContext(UserContext);
 
 
-
     function handleIncrement(){
         axios.get(`http://localhost:8000/cart/increment/${userdata.id}/${props.BookName}`).catch((err)=>console.log(err));
     };

@@ -16,6 +16,7 @@ import Cartbox from "./Components/Cartbox";
 import Alert from "./Components/Alert";
 import { CurrentContext } from "./Contexts/CurrentContext";
 import { AlertContext } from "./Contexts/AlertContext";
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -31,10 +32,13 @@ const Home=()=>{
             setbookdata(res.data);
         })
 
+        
+
     },[])
 
     return(
     <div className="books-container">
+        <Toaster position="top-center"/>
         <h1 style={{marginTop:"2rem"}}>Buy Books of Your Choice & Category</h1>
         <div className="bestsellers">
             
@@ -79,7 +83,7 @@ const MainHome=()=>{
         <div className="detail-home">
             <div className="text-contain">
             <div className="type-text">Welcome to our book exchange platform, where book lovers unite to buy and sell their beloved stories! Whether you're looking to declutter your shelves or find a new adventure, you're in the right place. Sell your gently loved books to someone who will cherish them just as much as you did, or browse our diverse selection to discover your next literary obsession. Join our community today and let the stories continue to inspire and connect us all.</div>
-            <div style={{display:"flex",flexDirection:"row",height:"2rem",width:"100%",alignItems:"center",justifyContent:"space-evenly"}}> <div style={{width:"6vw",height:"2.5rem",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",backgroundColor:"brown",color:"white",borderRadius:"1rem",textDecoration:"none",display:"inline",marginLeft:"0.5rem",marginRight:"0.5rem"}}><NavLink style={{color:"white"}} className="link" to="/login">Login</NavLink></div>   <div style={{width:"8vw",height:"2.5rem",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",backgroundColor:"brown",color:"white",borderRadius:"1rem",textDecoration:"none",display:"inline",paddingLeft:"1rem",marginLeft:"0.5rem"}}><NavLink style={{color:"white"}}className="link" to="/signup">Sign Up</NavLink></div>
+            <div style={{display:"flex",flexDirection:"row",height:"2rem",width:"100%",alignItems:"center",justifyContent:"space-evenly"}}> <div style={{width:"6vw",height:"2.5rem",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",backgroundColor:"black",color:"black",borderRadius:"0.5rem",textDecoration:"none",display:"inline",marginLeft:"0.5rem",marginRight:"0.5rem"}}><NavLink style={{color:"white"}} className="link" to="/login">Login</NavLink></div>   <div style={{width:"8vw",height:"2.5rem",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",backgroundColor:"black",color:"white",borderRadius:"0.5rem",textDecoration:"none",display:"inline",paddingLeft:"1rem",marginLeft:"0.5rem"}}><NavLink style={{color:"white"}}className="link" to="/signup">Sign Up</NavLink></div>
             </div>
             </div>
         <div className="types" style={{color:"black"}}>
@@ -236,6 +240,7 @@ const Cart=()=>{
     }
 
     useEffect(()=>{
+        
         curr.setcurrent("cart");
         axios.get(`http://localhost:8000/cart/${userdata.id}`)
         .then((res)=>{
@@ -251,6 +256,7 @@ const Cart=()=>{
                 setbill(res.data.reduce((a,book)=>{
                    return a+Number(book._doc.Price);
                 },0));
+                
             }
             
         })
@@ -267,6 +273,7 @@ const Cart=()=>{
     //     </div>
     // );
     return(<div style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
+        
     <div style={{minHeight:"calc(100vh - 60px)",width:"70vw",display:"flex",flexDirection:"column",alignItems:"center",color:"white"}}>
         <h1 style={{color:"white",marginTop:"1rem"}}>Your Orders</h1>
         {cart.map((book)=><Cartbox bookid={book._doc._id} key={book._doc._id} BookName={book._doc.BookName} AuthorName={book._doc.AuthorName} Price={book._doc.Price} YearsUsed={book._doc.YearsUsed} count={book.count}/>)}

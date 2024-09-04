@@ -94,6 +94,10 @@ app.post("/additem/:id",async(req,res)=>{
     }
     let user=await MERNUser.findOne({_id:id});
     let book=await BooksInfo.findOne({_id:bookid});
+    
+    if(book.SellerEmail==user.Email){
+        return res.json({error:"Same user is trying to buy a book"});
+    }
     let arr=user.MyCart;
     let idx=arr.findIndex((ele)=>ele._doc._id==bookid);
     if(idx===-1){
@@ -101,7 +105,7 @@ app.post("/additem/:id",async(req,res)=>{
         await user.save();
     }
     
-    return;
+    return res.json({success:"Added"});
 })
 
 app.get("/getprofile/:id",async(req,res)=>{
