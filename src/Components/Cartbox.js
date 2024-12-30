@@ -27,7 +27,7 @@ import axios from 'axios';
            <p>Years Used:{props.YearsUsed}</p>
         </div>
         
-        <div className="cart-counter"><div>{props.count}</div><button className="increment" onClick={handleIncrement}>+</button><button onClick={handleRemove} className="remove-btn">X</button></div>
+        <div className="cart-counter"><div>{props.count}</div><button style={{display:"flex",alignItems:"center",justifyContent:"center"}} className="increment" onClick={handleIncrement}>+</button><button onClick={handleRemove} className="remove-btn">X</button></div>
 
     </div>);
 }

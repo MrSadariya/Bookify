@@ -17,7 +17,7 @@ import Alert from "./Components/Alert";
 import { CurrentContext } from "./Contexts/CurrentContext";
 import { AlertContext } from "./Contexts/AlertContext";
 import toast, { Toaster } from 'react-hot-toast';
-
+import Footer from "./Components/Footer";
 
 
 const Home=()=>{
@@ -52,7 +52,7 @@ const Home=()=>{
             </div>
         </div>
         {bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
-
+        
         <h2 style={{marginTop:"5rem",marginBottom:"5rem"}}>Every book is a new beginning - start yours today!</h2>
     </div>);
 }
@@ -100,9 +100,7 @@ const MainHome=()=>{
 
         </div>
 
-        <div className="mainhome-footer">
-            <h1 style={{alignSelf:"center"}}>Footer</h1>
-        </div>
+        <Footer/>
 
     </div>)
 }
