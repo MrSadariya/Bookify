@@ -234,7 +234,7 @@
 .signup-box{
     height:100vh;
     width:100vw;
-    background: linear-gradient(45deg,blue,pink);
+    background: #202E50;
     /* background-color: whitesmoke; */
     
     display: flex;
@@ -244,7 +244,7 @@
 }
 
 .signup-main{
-    height:70vh;
+    height:60vh;
     width:30vw;
     background-color: white;
     display: flex;
@@ -258,7 +258,7 @@
 
 .signup-main input{
     width:80%;
-    height:2.5rem;
+    height:3rem;
     border-radius: 1rem;
     border: none;
     padding-left: 1rem;

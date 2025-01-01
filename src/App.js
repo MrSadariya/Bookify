@@ -18,6 +18,7 @@ import { CurrentContext } from "./Contexts/CurrentContext";
 import { AlertContext } from "./Contexts/AlertContext";
 import toast, { Toaster } from 'react-hot-toast';
 import Footer from "./Components/Footer";
+import Explore from "./Components/Explore";
 
 
 const Home=()=>{
@@ -200,14 +201,14 @@ const SignUp=()=>{
                 <input type="password" placeholder="Enter Your Password" name="Password"></input>
                 <button type="submit">Add Account</button>
                 </form>
-                <div style={{textAlign:"center" ,marginTop:"1rem",color:"black",fontSize:"1.2rem"}}>Already have an account ? <a style={{color:"black"}} href={`http://localhost:3000/login`}>Login</a></div>
+                <div style={{textAlign:"center" ,marginTop:"1rem",color:"white",fontSize:"1.2rem"}}>Already have an account ? <a style={{color:"white"}} href={`http://localhost:3000/login`}>Login</a></div>
             </div>
         </div>
     );
 }
 
 const LoginPage=()=>{
-    return(<div className="signup-box">
+    return(<div className="signup-box" >
          <div >
             <form className="signup-main" method="post" action="http://localhost:8000/handlelogin">
                 <h1>Login</h1>
@@ -215,7 +216,7 @@ const LoginPage=()=>{
                 <input type="password" placeholder="Enter Your Password" name="Password"></input>
                 <button type="submit">Login</button>
                 </form>
-                <div style={{textAlign:"center" ,marginTop:"1rem",color:"black",fontSize:"1.2rem"}}>Don't have an account ? <a style={{color:"black"}} href={`http://localhost:3000/signup`} >SignUp</a></div>
+                <div style={{textAlign:"center" ,marginTop:"1rem",color:"white",fontSize:"1.2rem"}}>Don't have an account ? <a style={{color:"white"}} href={`http://localhost:3000/signup`} >SignUp</a></div>
             </div>
 
     </div>)
@@ -433,6 +434,7 @@ const DefaultHome=()=>{
                     <Route path="fictional" element={<FictionalPage/>}/>
                     <Route path="nonfictional" element={<NonFictionalPage/>}/>
                     <Route path="educational" element={<Educational/>}/>
+                    <Route path="explore" element={<Explore/>}/>
                 </Routes>
             </div>
     </div></div>);
@@ -448,6 +450,7 @@ const App=()=>{
                 <Route path="/" element={<MainHome/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/signup" element={<SignUp/>}/>
+                
                 <Route path="/home/*" element={<DefaultHome/>}/>
             </Routes>
             

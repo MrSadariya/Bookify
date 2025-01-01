@@ -36,6 +36,7 @@ const Navbar=()=>{
         <div className="container">
         <div className="main"><FontAwesomeIcon icon={faBookOpen} style={{color: "white",}} /><h2>Bookify</h2></div>
         <div className="options">
+            
             <div style={divstyle1}><NavLink className="link mainoptions" to="/home">Home</NavLink></div>
             <div style={divstyle2} className="main-cart"><NavLink className="link mainoptions" to="/home/cart">Cart</NavLink></div>
             <div style={divstyle3}>
