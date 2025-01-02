@@ -434,7 +434,7 @@ const DefaultHome=()=>{
                     <Route path="fictional" element={<FictionalPage/>}/>
                     <Route path="nonfictional" element={<NonFictionalPage/>}/>
                     <Route path="educational" element={<Educational/>}/>
-                    <Route path="explore" element={<Explore/>}/>
+                    <Route path="explore" element={userdata.id==='1'?<NotLoggedinPage/>:<Explore/>}/>
                 </Routes>
             </div>
     </div></div>);
