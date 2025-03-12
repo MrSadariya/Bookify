@@ -51,10 +51,8 @@ const handleAddItem = async () => {
         count: 0,
       }
     );
-
-    // Confirm the type of response
-    console.log('Response:', response); // Check entire response object
-    console.log('Response Data:', response.data); // Should log the actual data
+    console.log('Response:', response); 
+    console.log('Response Data:', response.data); 
 
     if (response.data.error) {
       toast.error("You are selling this book, You can't buy it!!", {

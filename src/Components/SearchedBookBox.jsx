@@ -9,7 +9,7 @@ const SearchedBookBox=(props)=>{
                 <div className="searchedHeading">{props.title}</div>
                 <div className="searchedAuthor">{props.author}</div>
                 <div className="searchedDescription">Published by {props.publisher} on {props.date}</div>
-                <a className="previewAnchor" target="_blank" href={props.previewLink}><button>Preview</button></a>
+                <a className="previewAnchor" rel="noreferrer" target="_blank" href={props.previewLink}><button>Preview</button></a>
 
             </div>
         </div>
