@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../Contexts/UserContext";
 import { CurrentContext } from "../Contexts/CurrentContext";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { jwtDecode } from "jwt-decode";
+import toast, { Toaster } from "react-hot-toast";
+import NotLoggedinPage from "./NotLoggedinPage";
 
 const Profile=()=>{
-    
-    const userdata=useContext(UserContext);
+
     const [profiledata,setprofiledata]=useState(null);
     const [BooksSold,setBooksSold]=useState(0);
     const [AmountEarned,setAmountEarned]=useState(0);
@@ -17,30 +18,90 @@ const Profile=()=>{
     const [booksold,setbooksold]=useState([]);
     const [bookpending,setbookpending]=useState([]);
     const curr=useContext(CurrentContext);
+    const [isAuthenticated,setisAuthenticated]=useState(true);
 
     useEffect(()=>{
+
         curr.setcurrent("profile");
-        axios.get(`http://localhost:8000/getprofile/${userdata.id}`)
-        .then((res)=>{
-            if(!res.data.error){
-                setprofiledata(res.data);
-                setBooksSold(res.data.BooksSold);
-                setBooksBought(res.data.BooksBought);
-                setAmountEarned(res.data.MoneyEarned);
+
+        const token=localStorage.getItem("token");
+        if(!token){
+            setisAuthenticated(false);
+            toast.error("You are not logged in!!",{duration:3000});
+            return;
+        }
+        const decoded=jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000);
+        if(currentTime>decoded.exp){
+            setisAuthenticated(false);
+            localStorage.removeItem("token");
+            return;
+        }
+
+        const getProfileData=async ()=>{
+            try{
+                const res=await axios.get(`http://localhost:8000/profile/getprofile`,{
+                    headers:{Authorization:`Bearer ${token}`},withCredentials:true
+                })
+    
+                if(res.status===200){
+                    setprofiledata(res.data);
+                    setBooksSold(res.data.BooksSold);
+                    setBooksBought(res.data.BooksBought);
+                    setAmountEarned(res.data.MoneyEarned);
+                }else{
+                    toast.error(res.data.message,{duration:4000});
+                    return;
+                }
+
+            }catch(err){
+                if(err.res){
+                    toast.error(err.res.data.message,{duration:3000});
+                }
+                return;
             }
-        });
-        axios.get(`http://localhost:8000/bookpending/${userdata.id}`)
-        .then((res)=>{
-            setbookpending(res.data);
-        });
 
-        axios.get(`http://localhost:8000/booksold/${userdata.id}`)
-        .then((res)=>{
-            console.log(res.data);
-            setbooksold(res.data);
-        })
+            try{
+                const res1=await axios.get('http://localhost:8000/Books/getbookspending',{
+                    headers:{Authorization:`Bearer ${token}`},withCredentials:true
+                });
+                if(res1.status===200){
+                    setbookpending(res1.data);
+                }else{
+                    toast.error(res1.data.message,{duration:4000});
+                    return;
+                }
 
-    },[curr, userdata.id])
+            }catch(err){
+                if(err.res1){
+                    toast.error(err.res1.data.message,{duration:3000});
+                }
+                return;
+            }
+            
+            
+            try{
+                const res2=await axios.get(`http://localhost:8000/Books/getbookssold`,{
+                    headers:{Authorization:`Bearer ${token}`},withCredentials:true
+                });
+                if(res2.status===200){
+                    setbooksold(res2.data);
+                }else{
+                    toast.error(res2.data.message,{duration:4000});
+                    return;
+                }
+
+            }catch(err){
+                if(err.res2){
+                    toast.error(err.res2.data.message,{duration:3000});
+                }
+            }
+            
+        }
+
+        getProfileData();
+
+    },[curr])
 
     function handleDropdown(){
         let newval= displaySold==="none"?"block":"none";
@@ -50,10 +111,14 @@ const Profile=()=>{
     function handlePending(){
         let newval= displayPending==="none"?"block":"none";
         setdisplayPending(newval);
+    }
 
+    if(!isAuthenticated){
+        return <NotLoggedinPage/>
     }
      
     return(<div className="profilediv">
+        <Toaster position="top-center"/>
        <div className="profile-main">
         <div className="profile-photo"></div>
         <div className="user-detail">
@@ -73,15 +138,14 @@ const Profile=()=>{
         <div className="booksolddropdown">
             <button onClick={handleDropdown}>Books Sold {displaySold==="none"?<FontAwesomeIcon icon={faChevronDown} />:<FontAwesomeIcon icon={faChevronUp} />} </button>
             <div style={{display:`${displaySold}`}} className="booksold-content">
-                {booksold.map((book)=><div>{book._doc.BookName}<span style={{fontSize:"1rem",marginLeft:"1rem"}}>-{book._doc.AuthorName}</span></div>)}
-                
+                {booksold.length!==0 && booksold.map((book)=><div>{book._doc.BookName}<span style={{fontSize:"1rem",marginLeft:"1rem"}}>-{book._doc.AuthorName}</span></div>)}
             </div>
         </div>
 
         <div className="booksolddropdown">
             <button onClick={handlePending}>Books Pending {displayPending==="none"?<FontAwesomeIcon icon={faChevronDown} />:<FontAwesomeIcon icon={faChevronUp} />}</button>
             <div style={{display:`${displayPending}`}} className="booksold-content">
-                 {bookpending.map((book)=><div >{book.BookName}<span style={{fontSize:"1rem",marginLeft:"1rem"}}>-{book.AuthorName}</span></div>)}  
+                {bookpending.length!==0 &&  bookpending.map((book)=><div >{book.BookName}<span style={{fontSize:"1rem",marginLeft:"1rem"}}>-{book.AuthorName}</span></div>)}  
             </div>
         </div>
        </div>

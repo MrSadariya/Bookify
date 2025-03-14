@@ -1,8 +1,4 @@
-const mongoose=require('mongoose');
-
-mongoose.connect("mongodb://localhost:27017/").then(()=>{
-    console.log("MongoDB(BooksInfo) Connected!!");
-}).catch((err)=>console.log("Error:",err));
+const mongoose=require('./db');
 
 const BooksSchema=new mongoose.Schema({
     BookName:{

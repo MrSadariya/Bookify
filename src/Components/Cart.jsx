@@ -1,60 +1,104 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../Contexts/UserContext";
 import { CurrentContext } from "../Contexts/CurrentContext";
-import { AlertContext } from "../Contexts/AlertContext";
 import axios from "axios";
 import Cartbox from "./Cartbox";
+import {jwtDecode} from "jwt-decode";
+import { Toaster,toast } from 'react-hot-toast';
+import NotLoggedinPage from './NotLoggedinPage';
+import { useNavigate } from "react-router-dom";
+
 
 const Cart=()=>{
     
-    const userdata=useContext(UserContext);
     const [cart,setcart]=useState([]);
     const [items,setitems]=useState(0);
     const [bill,setbill]=useState(0);
     const curr=useContext(CurrentContext);
-    const alert=useContext(AlertContext);
+    const [isAuthenticated,setisAuthenticated]=useState(true);
+    const navigate=useNavigate();
     
 
-    function handleCheckout(){
-        alert.setshowalert("block");
-        alert.setmsg("You Successfully bought the books . Keep Purchasing!!");
-        axios.post(`http://localhost:8000/cart/handlecheckout/${userdata.id}`).catch((err)=>console.log(err));
+    const handleCheckout =async ()=>{
+        try{
+            const token=localStorage.getItem("token");
+            const resposne=await axios.post(`http://localhost:8000/cart/handlecheckout`,{},{
+                headers:{Authorization:`Bearer ${token}`},withCredentials:true
+            });
+
+            if(resposne.status===200){
+                setcart([]);
+                setitems(0);
+                setbill(0);
+                toast.success("You Succesfully purchased books!!",{duration:5000});
+            }
+            
+        }catch(err){
+            if(err.resposne){
+                if(err.resposne.status===401){
+                    toast.error("Unauthorised Access , Login please!!",{duration:5000});
+                    navigate("/login");
+                }else{
+                    toast.error(err.resposne.data.message,{duration:3000});
+                }
+
+            }
+        }
+        
+
+        
     }
 
     useEffect(()=>{
-        
+
         curr.setcurrent("cart");
-        axios.get(`http://localhost:8000/cart/${userdata.id}`)
-        .then((res)=>{
-            if(!res.data.error){
-                setcart(res.data);
-                setitems(res.data.reduce((a,book)=>{
-                  if(book.count){
-                    return a+Number(book.count);
-                  }else{
-                    return a+1;
-                  }
-                },0));
-                setbill(res.data.reduce((a,book)=>{
-                   return a+Number(book._doc.Price);
-                },0));
+
+        const token=localStorage.getItem("token");
+        if(!token){
+            setisAuthenticated(false);
+            return;
+        }
+        const decoded=jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000);
+        if(currentTime>decoded.exp){
+            setisAuthenticated(false);
+            localStorage.removeItem("token");
+            return;
+        }
+        const fetchItems=async()=>{
+            try {
+                const res = await axios.get(`http://localhost:8000/cart/getitems`,{
+                    headers:{Authorization:`Bearer ${token}`},withCredentials:true
+                });
                 
+                if (res.status === 200) { 
+                
+                    setcart(res.data);
+                    setitems(res.data.reduce((a, book) => {
+                        return a + (book.count ? Number(book.count) : 1);
+                    }, 0));
+                    setbill(res.data.reduce((a, book) => {
+                        return a + Number(book._doc.Price);
+                    }, 0));
+                
+                } else {
+                    toast.error(res.data.message,{duration:5000})
+                }
+            } catch (error) {
+                toast.error("Some Error has occured!!, Try Again.",{duration:5000})  
             }
-            
-        })
-    },)
 
+        }
+        fetchItems();
 
-    // return (
-    //     <div>
-    //         <h1 style={{textAlign:"center", color:"black"}}>Your Cart</h1>
-    //         <div className="books-container">
-    //         {userdata.id==="1"?<h1>No User</h1>:cart.map((book)=><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
-    //         </div>
-            
-    //     </div>
-    // );
-    return(<div style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
+    },[curr])
+
+    if(!isAuthenticated){
+        return <NotLoggedinPage/>;
+    }
+
+    return(
+          <div style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
+        <Toaster position="top-center"/>
         
     <div style={{minHeight:"calc(100vh - 60px)",width:"70vw",display:"flex",flexDirection:"column",alignItems:"center",color:"white"}}>
         <h1 style={{color:"white",marginTop:"1rem"}}>Your Orders</h1>
@@ -76,7 +120,8 @@ const Cart=()=>{
         <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center"}}><button onClick={handleCheckout} style={{width:"80%",height:"2rem",borderRadius:"0.5rem",border:"none",backgroundColor:"green",color:"white",marginBottom:"1rem"}}>CheckOut</button></div>
 
     </div>
-    </div>);
+    </div>
+    );
 }
 
 export default Cart;

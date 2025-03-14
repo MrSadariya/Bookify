@@ -1,71 +1,44 @@
-import React,{useState,useEffect,useContext} from "react";
+import React,{useContext} from "react";
 import './navstyle.css';
 import {UserContext} from'../Contexts/UserContext';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
-import { AlertContext } from "../Contexts/AlertContext";
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const Bookbox=(props)=>{
 
   const userdata=useContext(UserContext);
-  const alert=useContext(AlertContext);
-
-//  const  handleAddItem = async()=>{
-  
-//   if(userdata.id==="1"){
-//     return(<div>
-//       <h1>Please Login to Add items to cart.</h1>
-//     </div>)
-//   }else{
-//     const response=await axios.post(`http://localhost:8000/additem/${userdata.id}`,{
-//       id:userdata.id,bookid:props.bookid,count:0
-//     });
-    
-//     console.log(response.data);
-//     if(response.data.error){
-//       toast.error("You are selling this book , You can't buy it!!",{duration:5000});
-//     }else{
-//       alert.setshowalert("block");
-//       alert.setmsg("Book is added to your cart.");
-//     }
-
-//   }
- 
-
-//  }
 
 const handleAddItem = async () => {
-  if (userdata.id === "1") {
+  const token=localStorage.getItem("token");
+  if(!token){
     toast.error("Please Login to Add items to cart.", { duration: 5000 });
     return;
   }
-
+ 
   try {
     const response = await axios.post(
-      `http://localhost:8000/additem/${userdata.id}`,
+      `http://localhost:8000/cart/additem`,
       {
-        id: userdata.id,
         bookid: props.bookid,
         count: 0,
+      },{
+        headers:{Authorization:`Bearer ${token}`},withCredentials:true
       }
     );
-    console.log('Response:', response); 
-    console.log('Response Data:', response.data); 
-
-    if (response.data.error) {
-      toast.error("You are selling this book, You can't buy it!!", {
-        duration: 5000,
-      });
-    } else if(response.data.success){
+   
+    if(response.status===200){
       toast.success("Book Succesfully Added to Cart!!",{duration:5000});
-      // alert.setshowalert("block");
-      // alert.setmsg("Book is added to your cart.");
+      return;
+    }else{
+      toast.error(response.data.message,{duration:4000})
+      return;
     }
   } catch (error) {
-    toast.error("An error occurred while adding the item!", { duration: 5000 });
-    console.error(error);
+      if(error.response){
+        toast.error(error.response.data.message,{duration:3000});
+      }
   }
 };
 

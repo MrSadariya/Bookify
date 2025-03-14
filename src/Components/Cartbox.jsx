@@ -1,24 +1,42 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import './cartboxstyle.css';
-import {UserContext} from '../Contexts/UserContext';
-
 import axios from 'axios';
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
  const Cartbox = (props)=>{
 
-    const userdata=useContext(UserContext);
+    const navigate=useNavigate();
 
+    const handleIncrement=async()=>{
+        
+    //     const token=localStorage.getItem("token");
+    //    const res=await axios.get(`http://localhost:8000/cart/incrementItem/${props.bookid}`,{
+    //     headers:{Authorization:`Bearer ${token}`},withCredentials:true
+    //     });
+    //    if(res.status===200){
 
-    function handleIncrement(){
-        axios.get(`http://localhost:8000/cart/increment/${userdata.id}/${props.BookName}`).catch((err)=>console.log(err));
+    //    }else{
+    //     toast.error(res.data.message,{duration:4000});
+    //    }
+      return;
     };
 
-    function handleRemove(){
-        axios.get(`http://localhost:8000/cart/remove/${userdata.id}/${props.BookName}`)
-        .catch((err)=>console.log(err));
+    const handleRemove=async ()=>{
+        const token=localStorage.getItem("token");
+        const res=await axios.put(`http://localhost:8000/cart/removeitem`,{bookid:props.bookid,bookname:props.BookName},{
+            headers:{Authorization:`Bearer ${token}`},withCredentials:true
+        });
+        if(res.status===200){
+            navigate(0);
+        }
+        if(res.status!==200){
+            toast.error(res.data.message,{duration:4000});
+        }
     }
 
     return(<div className="cartbox">
+        <Toaster position="top-center"/>
         <div className="book-image"></div>
         <div className="details">
            <h2>{props.BookName}</h2>

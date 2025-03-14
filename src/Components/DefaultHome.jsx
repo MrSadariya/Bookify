@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
-import axios from "axios";
 import Navbar from "./Navbar";
-import Alert from "./Alert";
 
 import Dashboard from "./Dashboard";
 import { Route, Routes } from "react-router-dom";
@@ -15,40 +13,46 @@ import Explore from "./Explore";
 import SellBook from "./SellBook";
 import Cart from "./Cart";
 import Profile from "./Profile";
+import { jwtDecode } from "jwt-decode";
+
 
 const DefaultHome=()=>{
 
     const userdata=useContext(UserContext);
-    const [componentstyle,setcomponentstyle]=useState({width:"90vw"});
+    const [isAuthenticated,setisAuthenticated]=useState(true);
 
+    
     useEffect(()=>{
-        axios.get("http://localhost:8000/getuseremail",{ withCredentials:true}).then((res)=>{
-            if(res.data.id){
-                userdata.setid(res.data.id);
-            }else{
-                userdata.setid("1");
-            }
-            
-        });
+
+        const token=localStorage.getItem("token");
+        if(!token){
+            setisAuthenticated(false);
+            return;
+        }
+        const decoded=jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000);
+        if(currentTime>decoded.exp){
+            setisAuthenticated(false);
+            localStorage.removeItem("token");
+            return;
+        }
         
-    },[userdata, userdata.id]);
+    },[userdata]);
 
     return(<div className="app">
         <Navbar/>
-        <Alert/>
             <div className="content">
             <Dashboard/>
-            {/* {userdata.id==="1"?<div></div>:<Dashboard/>} */}
             <div className="component" >
                <Routes>
                     <Route  path="/" element={<Home />}/>
-                    <Route path="cart" element={userdata.id==='1'?<NotLoggedinPage/>:<Cart/>}/>
-                    <Route path="profile" element={userdata.id==="1"?<NotLoggedinPage/>:<Profile/>}/>
-                    <Route path="sellbook" element={userdata.id==="1"?<NotLoggedinPage/>:<SellBook/>}/>
+                    <Route path="cart" element={!isAuthenticated?<NotLoggedinPage/>:<Cart/>}/>
+                    <Route path="profile" element={!isAuthenticated?<NotLoggedinPage/>:<Profile/>}/>
+                    <Route path="sellbook" element={!isAuthenticated?<NotLoggedinPage/>:<SellBook/>}/>
                     <Route path="fictional" element={<FictionalPage/>}/>
                     <Route path="nonfictional" element={<NonFictionalPage/>}/>
                     <Route path="educational" element={<Educational/>}/>
-                    <Route path="explore" element={userdata.id==='1'?<NotLoggedinPage/>:<Explore/>}/>
+                    <Route path="explore" element={!isAuthenticated?<NotLoggedinPage/>:<Explore/>}/>
                 </Routes>
             </div>
     </div></div>);

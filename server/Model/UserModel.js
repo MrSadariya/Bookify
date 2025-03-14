@@ -1,8 +1,4 @@
-const mongoose=require('mongoose');
-
-mongoose.connect("mongodb://localhost:27017/").then(()=>{
-    console.log("MongoDB(MERNUser) Connected!!");
-}).catch((err)=>console.log("Error:",err));
+const mongoose=require('./db');
 
 const MERNUserSchema=new mongoose.Schema({
     FullName:{
@@ -11,7 +7,8 @@ const MERNUserSchema=new mongoose.Schema({
     },
     Email:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     Password:{
         type:String,
