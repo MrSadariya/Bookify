@@ -3,11 +3,13 @@ import { CurrentContext } from "../Contexts/CurrentContext";
 import axios from "axios";
 import Bookbox from "./Bookbox";
 import toast from "react-hot-toast";
+import SkeletonLoader from "./SkeletonLoader";
 
 const Educational=()=>{
 
     const [bookdata,setbookdata]=useState([]);
     const curr=useContext(CurrentContext);
+    const [loading,setLoading]=useState(true);
 
     useEffect(()=>{
         curr.setcurrent("educational");
@@ -20,10 +22,15 @@ const Educational=()=>{
                 toast.error(res.data.message,{duration:4000});
             }
         }
-
+        setLoading(true);
         fetchBooks();
+        setLoading(false);
 
     },[curr])
+
+    if(loading){
+        return <SkeletonLoader/>
+    }
 
     return(<div style={{minHeight:"calc(100vh - 60px)",width:"90vw",display:"flex",flexDirection:"column",alignItems:"center"}}>
         <h2 style={{marginTop:"3rem",marginBottom:"3rem"}}>Ignite your curiosity - unlock knowledge with our educational books!</h2>

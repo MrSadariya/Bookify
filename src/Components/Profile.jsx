@@ -6,6 +6,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { jwtDecode } from "jwt-decode";
 import toast, { Toaster } from "react-hot-toast";
 import NotLoggedinPage from "./NotLoggedinPage";
+import SkeletonLoader from "./SkeletonLoader";
 
 const Profile=()=>{
 
@@ -19,6 +20,7 @@ const Profile=()=>{
     const [bookpending,setbookpending]=useState([]);
     const curr=useContext(CurrentContext);
     const [isAuthenticated,setisAuthenticated]=useState(true);
+    const [loading,setLoading]=useState(true);
 
     useEffect(()=>{
 
@@ -98,8 +100,9 @@ const Profile=()=>{
             }
             
         }
-
+        setLoading(true);
         getProfileData();
+        setLoading(false);
 
     },[curr])
 
@@ -111,6 +114,10 @@ const Profile=()=>{
     function handlePending(){
         let newval= displayPending==="none"?"block":"none";
         setdisplayPending(newval);
+    }
+
+    if(loading){
+        return <SkeletonLoader/>
     }
 
     if(!isAuthenticated){

@@ -6,6 +6,7 @@ import {jwtDecode} from "jwt-decode";
 import { Toaster,toast } from 'react-hot-toast';
 import NotLoggedinPage from './NotLoggedinPage';
 import { useNavigate } from "react-router-dom";
+import SkeletonLoader from "./SkeletonLoader";
 
 
 const Cart=()=>{
@@ -16,6 +17,7 @@ const Cart=()=>{
     const curr=useContext(CurrentContext);
     const [isAuthenticated,setisAuthenticated]=useState(true);
     const navigate=useNavigate();
+    const [loading,setLoading]=useState(true);
     
 
     const handleCheckout =async ()=>{
@@ -64,6 +66,7 @@ const Cart=()=>{
             localStorage.removeItem("token");
             return;
         }
+
         const fetchItems=async()=>{
             try {
                 const res = await axios.get(`http://localhost:8000/cart/getitems`,{
@@ -88,9 +91,15 @@ const Cart=()=>{
             }
 
         }
+        setLoading(true);
         fetchItems();
+        setLoading(false);
 
     },[curr])
+
+    if(loading){
+        return <SkeletonLoader/>
+    }
 
     if(!isAuthenticated){
         return <NotLoggedinPage/>;

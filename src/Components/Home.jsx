@@ -3,18 +3,27 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import Bookbox from "../Components/Bookbox";
 import { CurrentContext } from "../Contexts/CurrentContext";
+import SkeletonLoader from "./SkeletonLoader";
 
 const Home=()=>{
     
     const [bookdata,setbookdata]=useState([]);
     const curr=useContext(CurrentContext);
+    const [loading,setLoading]=useState(true);
 
     useEffect(()=>{
+
         curr.setcurrent("home");
+        setLoading(true);
         axios.get(`http://localhost:8000/Books/All`).then((res)=>{
             setbookdata(res.data);
         })
+        setLoading(false);
     },[curr])
+
+    if(loading){
+        return <SkeletonLoader/>
+    }
 
     return(
     <div className="books-container">
