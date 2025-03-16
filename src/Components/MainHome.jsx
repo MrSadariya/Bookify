@@ -35,7 +35,7 @@ const MainHome=()=>{
             </div>
         <div className="types" style={{color:"black"}}>
                 <div className="row">
-                    <div className="fiction real-fiction" style={{color:"white"}}><NavLink className="link" to="/home/fictional">Fiction</NavLink>  </div>
+                    <div  className="fiction real-fiction" style={{color:"white"}}><NavLink className="link" to="/home/fictional">Fiction</NavLink>  </div>
                     <div className="non-fiction real-nonfiction" style={{color:"white"}}><NavLink className="link" to="/home/nonfictional">NonFictional</NavLink> </div>
                 </div>
 

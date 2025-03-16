@@ -88,6 +88,8 @@ const handleCheckout=async (req,res)=>{
             return res.status(400).json({message:"Cart is already empty"});
         }
 
+        const soldBookIds = user.MyCart.map(item => item._doc._id);
+
         for (let item of user.MyCart) {
             const seller = await User.findOne({ Email: item._doc.SellerEmail });
             if (!seller) continue;
@@ -95,9 +97,14 @@ const handleCheckout=async (req,res)=>{
             seller.BooksSold.push(item);
             seller.MoneyEarned += item._doc.Price;
             await seller.save();
-
-            await Book.deleteOne({ _id: item._doc._id });
         }
+
+        await Book.deleteMany({ _id: { $in: soldBookIds } });
+
+        await User.updateMany(
+            { "MyCart._doc._id": { $in: soldBookIds } },
+            { $pull: { MyCart: { "_doc._id": { $in: soldBookIds } } } }
+        );        
 
         user.BooksBought += user.MyCart.length;
         user.MyCart = [];
