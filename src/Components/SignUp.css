@@ -1,0 +1,224 @@
+:root {
+    --primary-green: #00CC75;
+    --dark-blue: #192037;
+    --input-bg: #1E2747;
+    --text-white: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --card-glow: 0 0 25px rgba(255, 255, 255, 0.2);
+  }
+  
+  /* body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--dark-blue);
+    height: 100%;
+  } */
+  
+  .signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: var(--dark-blue);
+  }
+  
+  .auth-card {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--dark-blue);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .auth-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--card-glow);
+    z-index: 0;
+  }
+  
+  .card-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .signup-title, .otp-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin: 0;
+    padding: 1rem 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+ 
+.login-link {
+    color: #333; 
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+  
+  .login-link a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 0.25rem;
+  }
+  
+  .form-container {
+    position: relative;
+    z-index: 1;
+    padding: 1rem;
+  }
+  
+  .signup-form, .otp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .input-field {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-field input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: none;
+    background-color: var(--input-bg);
+    color: var(--text-white);
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .input-field input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .input-field input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 204, 117, 0.3);
+  }
+  
+  .otp-description {
+    text-align: center;
+    color: #333;
+    margin: 1rem 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .otp-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .otp-input {
+    width: 2.5rem;
+    height: 2.5rem;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: var(--input-bg);
+    color: var(--text-white);
+    border: none;
+    border-radius: 8px;
+  }
+  
+  .otp-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 204, 117, 0.3);
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .auth-button {
+    background-color: var(--primary-green);
+    color: var(--text-white);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 150px;
+  }
+  
+  .auth-button:hover {
+    background-color: #00b868;
+  }
+  
+  .auth-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 480px) {
+    .auth-card {
+      padding: 1rem;
+    }
+    
+    .auth-card::before {
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+    }
+    
+    .signup-title, .otp-title {
+      font-size: 2rem;
+      padding: 0.5rem 0;
+    }
+    
+    .input-field input {
+      padding: 0.75rem;
+    }
+    
+    .otp-input {
+      width: 2rem;
+      height: 2rem;
+      font-size: 1rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .signup-title, .otp-title {
+      font-size: 2.75rem;
+    }
+    
+    .auth-button {
+      min-width: 180px;
+    }
+  }

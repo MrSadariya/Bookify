@@ -1,6 +1,6 @@
 import React from "react";
 import {Routes,Route} from 'react-router-dom';
-import './Components/navstyle.css';
+// import './Components/navstyle.css';
 import 'font-awesome/css/font-awesome.min.css';
 import MainHome from "./Components/MainHome";
 import LoginPage from "./Components/LoginPage";

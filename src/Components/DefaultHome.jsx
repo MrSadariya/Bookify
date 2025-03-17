@@ -14,13 +14,13 @@ import SellBook from "./SellBook";
 import Cart from "./Cart";
 import Profile from "./Profile";
 import { jwtDecode } from "jwt-decode";
+import  { Toaster } from "react-hot-toast";
 
 
 const DefaultHome=()=>{
 
     const userdata=useContext(UserContext);
     const [isAuthenticated,setisAuthenticated]=useState(true);
-
     
     useEffect(()=>{
 
@@ -44,6 +44,7 @@ const DefaultHome=()=>{
             <div className="content">
             <Dashboard/>
             <div className="component" >
+                <Toaster position="top-center"/>
                <Routes>
                     <Route  path="/" element={<Home />}/>
                     <Route path="cart" element={!isAuthenticated?<NotLoggedinPage/>:<Cart/>}/>

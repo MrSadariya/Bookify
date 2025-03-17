@@ -1,6 +1,6 @@
 import React,{useContext, useEffect,useState} from "react";
 import axios from 'axios';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import Bookbox from "../Components/Bookbox";
 import { CurrentContext } from "../Contexts/CurrentContext";
 import SkeletonLoader from "./SkeletonLoader";
@@ -10,6 +10,14 @@ const Home=()=>{
     const [bookdata,setbookdata]=useState([]);
     const curr=useContext(CurrentContext);
     const [loading,setLoading]=useState(true);
+
+     useEffect(() => {
+            const message = localStorage.getItem("toastMessage");
+            if (message) {
+                toast.success(message, { duration: 3000 });
+                localStorage.removeItem("toastMessage"); 
+            }
+    }, []);
 
     useEffect(()=>{
 

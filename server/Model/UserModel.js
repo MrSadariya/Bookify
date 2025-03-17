@@ -27,6 +27,13 @@ const MERNUserSchema=new mongoose.Schema({
     },
     BooksSold:{
         type:Array,
+    },
+    verificationOTP:{
+        type:String
+    },
+    isVerified:{
+        type:Boolean,
+        default:false
     }
 });
 
