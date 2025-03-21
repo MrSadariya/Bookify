@@ -16,7 +16,7 @@
 .start {
   min-height: 100vh;
   width: 100%;
-  background-image: url("../Static/open-book.jpg");
+  background-image: url("/Static/open-book.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -238,7 +238,7 @@
 }
 
 .real-fiction {
-  background-image: url("../Static/fictional.jpg");
+  background-image: url("/Static/fictional.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -246,7 +246,7 @@
 }
 
 .real-nonfiction {
-  background-image: url("../Static/nonfictional.jpg");
+  background-image: url("/Static/nonfictional.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -254,7 +254,7 @@
 }
 
 .real-educational {
-  background-image: url("../Static/educational.png");
+  background-image: url("/Static/educational.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -262,7 +262,7 @@
 }
 
 .real-magazine {
-  background-image: url("../Static/magazine.jpg");
+  background-image: url("/Static/magazine.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
