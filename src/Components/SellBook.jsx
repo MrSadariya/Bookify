@@ -5,10 +5,15 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import NotLoggedinPage from "./NotLoggedinPage";
 import { useNavigate } from "react-router-dom";
+import { SidebarContext } from "../Contexts/SidebarContext";
+import "./SellBook.css";
 
 const SellBook=()=>{
 
+    const BASE_URL=process.env.REACT_APP_BASE_URL;
+
     const navigate=useNavigate();
+    const {isSideBar,setIsSideBar}=useContext(SidebarContext);
     
     const curr=useContext(CurrentContext);
     const [isAuthenticated,setisAuthenticated]=useState(true);
@@ -17,6 +22,7 @@ const SellBook=()=>{
         AuthorName: "",
         Price: "",
         YearsUsed: "",
+        bookCoverURL:"",
         BookType: "Fictional",
     });
 
@@ -27,7 +33,13 @@ const SellBook=()=>{
 
     useEffect(()=>{
         curr.setcurrent("sellbook");
-    },[curr])
+        setIsSideBar(false);
+        const token=localStorage.getItem("token");
+        if(!token){
+            setisAuthenticated(false);
+            return;
+        }
+    },[curr, setIsSideBar])
 
     const handleSellBook=async (e)=>{
         e.preventDefault();
@@ -47,7 +59,7 @@ const SellBook=()=>{
         
         try{
 
-            const res=await axios.post(`http://localhost:8000/Books/addbook`,formData,{
+            const res=await axios.post(`${BASE_URL}/Books/addbook`,formData,{
                 headers:{Authorization:`Bearer ${token}`},withCredentials:true
             })
     
@@ -58,6 +70,7 @@ const SellBook=()=>{
                     AuthorName: "",
                     Price: "",
                     YearsUsed: "",
+                    bookCoverURL:"",
                     BookType: "Fictional",
                 })
             }else{
@@ -98,6 +111,11 @@ const SellBook=()=>{
             <div>
             <label>Years Used</label>
             <input type="number" name="YearsUsed" placeholder="e.g. 2 (in Years)" value={formData.YearsUsed} onChange={handleChange}  required></input> 
+            </div>
+
+            <div>
+            <label>CoverImage URL(Link)</label>
+            <input type="text" name="bookCoverURL"  placeholder="e.g. CoverImage_URL "value={formData.bookCoverURL} onChange={handleChange}  required></input>
             </div>
 
             <div>

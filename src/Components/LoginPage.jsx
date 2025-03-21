@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
 const Login = () => {
+    const BASE_URL=process.env.REACT_APP_BASE_URL;
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ Email: "", Password: "" });
     const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,7 @@ const Login = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:8000/auth/login", formData, {
+            const response = await axios.post(`${BASE_URL}/auth/login`, formData, {
                 headers: { "Content-Type": "application/json" },
             });
 
@@ -84,7 +85,10 @@ const Login = () => {
                             </button>
                         </div>
                         <div className="login-link">
-                            Don't have an account? <a href="http://localhost:3000/signup">Sign Up</a>
+                            Don't have an account? <a href="/signup">Sign Up</a>
+                        </div>
+                        <div className="login-link" >
+                            Forgot Password? <a href="/forgetpassword">Reset-Password</a>
                         </div>
                     </form>
                 </div>

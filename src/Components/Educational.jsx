@@ -4,18 +4,23 @@ import axios from "axios";
 import Bookbox from "./Bookbox";
 import toast from "react-hot-toast";
 import SkeletonLoader from "./SkeletonLoader";
+import { SidebarContext } from "../Contexts/SidebarContext";
 
 const Educational=()=>{
+
+    const BASE_URL=process.env.REACT_APP_BASE_URL;
 
     const [bookdata,setbookdata]=useState([]);
     const curr=useContext(CurrentContext);
     const [loading,setLoading]=useState(true);
+    const {isSideBar,setIsSideBar}=useContext(SidebarContext);
 
     useEffect(()=>{
         curr.setcurrent("educational");
+        setIsSideBar(false);
 
         const fetchBooks=async ()=>{
-            const res=await axios.get("http://localhost:8000/Books/Educational");
+            const res=await axios.get(`${BASE_URL}/Books/Educational`);
             if(res.status===200){
                 setbookdata(res.data);
             }else{
@@ -26,18 +31,21 @@ const Educational=()=>{
         fetchBooks();
         setLoading(false);
 
-    },[curr])
+    },[curr, setIsSideBar])
 
     if(loading){
         return <SkeletonLoader/>
     }
 
-    return(<div style={{minHeight:"calc(100vh - 60px)",width:"90vw",display:"flex",flexDirection:"column",alignItems:"center"}}>
-        <h2 style={{marginTop:"3rem",marginBottom:"3rem"}}>Ignite your curiosity - unlock knowledge with our educational books!</h2>
+    return(
+    <div className="home-books-container">
+        <h2 className="book-thought-div fictional-thought">Ignite your curiosity - unlock knowledge with our educational books!</h2>
     
-    <div className="books-container">
-    {bookdata.length!==0 && bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
-</div></div>);
+        <div className="books-contain books-contain-fictional">
+        {bookdata.length!==0 && bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed} {...(book.bookCoverURL && { bookCoverURL: book.bookCoverURL })}/>)}
+        </div>
+    
+    </div>);
 }
 
 export default Educational;

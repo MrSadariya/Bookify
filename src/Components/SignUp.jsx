@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
 const SignUp = () => {
+
+    const BASE_URL=process.env.REACT_APP_BASE_URL;
+
+
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ FullName: "", Email: "", Password: "" });
     const [userOTP, setUserOTP] = useState(["", "", "", "", "", ""]);
@@ -21,7 +25,7 @@ const SignUp = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:8000/auth/signup", formData, {
+            const response = await axios.post(`${BASE_URL}/auth/signup`, formData, {
                 headers: { "Content-Type": "application/json" },
             });
 
@@ -75,7 +79,7 @@ const SignUp = () => {
         const enteredOTP = userOTP.join("");
 
         try {
-            const response = await axios.post("http://localhost:8000/auth/signupconfirm", {
+            const response = await axios.post(`${BASE_URL}/auth/signupconfirm`, {
                 FullName: formData.FullName,
                 Email: formData.Email,
                 Password: formData.Password,
@@ -149,7 +153,7 @@ const SignUp = () => {
                                 </button>
                             </div>
                             <div className="login-link">
-                                Already have an account? <a href="http://localhost:3000/login">Login</a>
+                                Already have an account? <a href="/login">Login</a>
                             </div>
                         </form>
                     </div>

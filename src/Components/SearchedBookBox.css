@@ -26,10 +26,12 @@
 }
 
 .searchedBookPhotoDiv img{
-    width: 80%;
-    height: auto;
+    /* width: 80%; */
+    height: 80%;
+    width: auto;
     object-fit: cover;
     border-radius: 0.2rem;
+    overflow: hidden;
 }
 
 .searchedBookDetail{
@@ -65,4 +67,46 @@
     font-weight: 900;
     border: none;
     border-radius: 0.5rem;
+}
+
+@media (max-width: 768px) {
+
+    .searchedBookBox{
+        width:90%;
+        height: 30vh;
+        font-size: 0.7rem;
+    }
+
+    .searchedHeading{
+        font-size: 0.8rem;
+    }
+    
+    .searchedAuthor{
+        font-size: 0.6rem;
+    }
+    
+    .searchedDescription{
+        font-size: 0.6rem;
+    }
+
+    .previewAnchor button{
+        position: absolute;
+        bottom:0.8rem;
+        margin-top: 0.5rem;
+        height: 2rem;
+        width: 6rem;
+        background-color: green;
+        color: white;
+        font-weight: 900;
+        border: none;
+        border-radius: 0.2rem;
+    }
+
+    
+
+
+
+ 
+   
+   
 }

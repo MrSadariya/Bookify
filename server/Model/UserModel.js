@@ -34,6 +34,12 @@ const MERNUserSchema=new mongoose.Schema({
     isVerified:{
         type:Boolean,
         default:false
+    },
+    profilePicURL:{
+        type:String
+    },
+    ResetVerificationOTP:{
+        type:String
     }
 });
 

@@ -1,14 +1,15 @@
-import React,{useContext} from "react";
+import React from "react";
 // import './navstyle.css';
-import {UserContext} from'../Contexts/UserContext';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-hot-toast';
+import "./Bookbox.css";
+import defaultBookPic from "../Static/productnotfound.png"
 
 const Bookbox=(props)=>{
 
-  const userdata=useContext(UserContext);
+  const BASE_URL=process.env.REACT_APP_BASE_URL;
 
 const handleAddItem = async () => {
   const token=localStorage.getItem("token");
@@ -19,7 +20,7 @@ const handleAddItem = async () => {
  
   try {
     const response = await axios.post(
-      `http://localhost:8000/cart/additem`,
+      `${BASE_URL}/cart/additem`,
       {
         bookid: props.bookid,
         count: 0,
@@ -44,7 +45,9 @@ const handleAddItem = async () => {
 
 
     return(<div className="bookbox">
-      <div className="bookimgdiv"></div>
+      <div className="bookimgdiv">
+        <img src={props.bookCoverURL?props.bookCoverURL:defaultBookPic} alt="Book-Pic"></img>
+      </div>
       <div className="bookdetaildiv">
       <h2>{props.BookName}</h2>
       <h3>{props.AuthorName}</h3>

@@ -270,13 +270,14 @@
 }
 
 .row > div:hover {
+  
   transform: scale(1.03);
 }
 
 .intro .link:hover, 
 .text-contain .link:hover {
-  opacity: 0.9;
-  transform: scale(1.05);
+  opacity:0.6;
+  /* transform: scale(1.05); */
 }
 
 

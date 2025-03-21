@@ -22,6 +22,9 @@ const BooksSchema=new mongoose.Schema({
     BookType:{
         type:String,
         required:true
+    },
+    bookCoverURL:{
+        type:String
     }
 
 });

@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const {VERIFICATION_EMAIL_TEMPLATE}=require("./emailTemplate");
+const {VERIFICATION_EMAIL_TEMPLATE,PASSWORD_RESET_REQUEST_TEMPLATE}=require("./emailTemplate");
 
 const transporter = nodemailer.createTransport({
     service:"gmail",
@@ -25,7 +25,11 @@ const MailData={
 
 const getVerificationEmailTemplate=(code)=> {
     return VERIFICATION_EMAIL_TEMPLATE.replace("{verificationCode}", code);
-  }
+}
+
+const getPasswordResetEmailTemplate=(code)=>{
+  return PASSWORD_RESET_REQUEST_TEMPLATE.replace("{ResetverificationCode}",code);
+}
   
 
 const sendEMail=async(receiverEmail,OTP)=>{
@@ -38,5 +42,14 @@ const sendEMail=async(receiverEmail,OTP)=>{
     // console.log(info);
 }
 
-module.exports={sendEMail};
+const sendPasswordResetEmail=async(receiverEmail,OTP)=>{
+
+  const currMailData=MailData;
+  currMailData.to=receiverEmail;
+  currMailData.html=getPasswordResetEmailTemplate(OTP);
+  const info=await transporter.sendMail(currMailData);
+
+}
+
+module.exports={sendEMail,sendPasswordResetEmail};
 

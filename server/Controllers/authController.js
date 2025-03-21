@@ -1,6 +1,6 @@
 const User=require("../Model/UserModel");
 const jwt=require("jsonwebtoken");
-const {sendEMail} =require("./sendEmail");
+const {sendEMail,sendPasswordResetEmail} =require("./sendEmail");
 
 const handleSignup=async (req,res)=>{
    let body=req.body;
@@ -105,4 +105,75 @@ const handleLogin=async(req,res)=>{
 
 }
 
-module.exports={handleSignup,handleLogin,confirmSignUp};
+const handleForgetPassword=async(req,res)=>{
+    try{
+        const userEmail=req.body.Email;
+        const user=await User.findOne({Email:userEmail,isVerified:true});
+        if(!user){
+            return res.status(401).json({message:"No such user,invalid credentials!!"});
+        }
+        const verificationOTP=Math.floor(100000+ Math.random()*900000).toString();
+
+        user.ResetVerificationOTP=verificationOTP;
+        await user.save();
+
+        await sendPasswordResetEmail(user.Email,verificationOTP);
+
+        return res.status(200).json({message:"Reset-OTP sent to your email!!"});
+
+    }catch(err){
+        console.log("Error:",err);
+        res.status(500).json({message:"Server Error"});
+    }
+
+}
+
+const handleForgetPasswordVerifyOTP=async(req,res)=>{
+    try{
+        const userEmail=req.body.Email;
+        const userOTP=req.body.OTP;
+
+        const user=await User.findOne({Email:userEmail,isVerified:true});
+        if(!user){
+            return res.status(401).json({message:"No such user,invalid credentials!!"})
+        }
+        if(user.ResetVerificationOTP!==userOTP){
+            return res.status(401).json({message:"Reset-OTP doesn't match,Try again!!"});
+        }
+
+        return res.status(200).json({message:"OTP Matched,Reset Your Password!!"});
+
+    }catch(err){
+        console.log("Error:",err);
+        res.status(500).json({message:"Server Error"});
+    }
+
+}
+
+const handleResetPassword=async(req,res)=>{
+    try{
+        const userEmail=req.body.Email;
+        const userOTP=req.body.OTP;
+        const newPassword=req.body.NewPassword;
+
+        const user=await User.findOne({Email:userEmail,isVerified:true});
+        if(!user){
+            return res.status(401).json({message:"No such user,invalid credentials!!"})
+        }
+        if(user.ResetVerificationOTP!==userOTP){
+            return res.status(401).json({message:"Reset-OTP doesn't match,Try again!!"});
+        }
+
+        user.Password=newPassword;
+        await user.save();
+
+        return res.status(200).json({message:"Password-Reset Successfully,Login again with new credentials!!"});
+
+    }catch(err){
+        console.log("Error:",err);
+        res.status(500).json({message:"Server Error"});
+    }
+
+}
+
+module.exports={handleSignup,handleLogin,confirmSignUp,handleForgetPassword,handleForgetPasswordVerifyOTP,handleResetPassword};

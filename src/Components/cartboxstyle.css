@@ -1,87 +1,119 @@
-.cartbox{
-    height: 22vh;
-    width:60vw;
+.cartbox-maindiv{
+    width: 90%;
+    height: 25vh;
     background-color: #101116;
-    border-radius: 1rem;
-    margin:1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    color: white;
+    border-radius: 0.2rem;
+    position: relative;
+    /* box-shadow:inset 0 0 10px rgba(255,255,255,0); */
 }
 
-.book-image{
-    height:18vh;
-    width:10vw;
-    background-color: red;
-    border-radius: 1rem;
+.cartbox-maindiv:hover{
+    box-shadow:inset 0 0 20px  rgba(255,255,255,0.8); 
+}
+
+.cartbox-book-image{
     margin-left: 1rem;
-}
-
-.details{
-    height:18vh;
-    width:25vw;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-evenly;
-}
-
-.cart-counter{
-    height:5vh;
-    width:10vw;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 0.5rem;
-    font-size: 2rem;
-}
-
-.increment{
-    height:100%;
-    width:25%;
-    font-size: 2rem;
-    border-radius: 0.3rem;
-    border: none;
-    background-color: white;
-    color:black;
-    transition-property: all;
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in;
-}
-
-.increment:hover{
-    background-color: green;
-    color: white;
-}
-
-.cart-counter div{
-    width:35%;
-    height:100%;
-    background-color: white;
-    color:black;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0.3rem;
+    width: 30%;
+    height: 80%;
 }
 
-.remove-btn{
-    height:100%;
-    width:25%;
-    font-size: 1.5rem;
-    border-radius: 0.3rem;
-    border: none;
+.cartbox-details{
+    width: 40%;
+    margin-left: 1rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.cartbox-details p{
+    font-weight: 600;
+}
+
+.cart-counter-div{
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cart-counter-div>*{
+    height: 2rem;
+    width: 2rem;
+    margin: 0.1rem;
+}
+
+.cart-counter-value{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: white;
-    color:red;
-    transition-property: all;
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in;
+    color: black;
+    font-weight: 600;
+    border-radius: 0.1rem;
 }
 
-.remove-btn:hover{
-    background-color: red;
+.cart-counter-div > button{
+    border: none;
+    border-radius: 0.1rem;
+    font-size: 1.4rem;
     color: white;
+}
+
+.cart-counter-increment{
+    background-color: green;
+}
+
+.cart-counter-remove-btn{
+    background-color: red;
+}
+
+.cart-counter-increment:hover{
+    background-color: rgb(2, 100, 2);
+}
+
+.cart-counter-remove-btn:hover{
+    background-color: rgb(209, 3, 3);
+}
+
+.cartbox-book-image img{
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+
+    .cartbox-maindiv{
+        width: 100%;
+    }
+
+    .cartbox-details{
+        font-size: 0.8rem;
+    }
+
+    .cart-counter-increment{
+        display: none;
+    }
+
+    .cart-counter-value{
+        display: none;
+    }
+
+    .cart-counter-div{
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
 }

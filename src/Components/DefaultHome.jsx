@@ -1,7 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../Contexts/UserContext";
+import {  useEffect, useState } from "react";
 import Navbar from "./Navbar";
-
 import Dashboard from "./Dashboard";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Home";
@@ -15,11 +13,11 @@ import Cart from "./Cart";
 import Profile from "./Profile";
 import { jwtDecode } from "jwt-decode";
 import  { Toaster } from "react-hot-toast";
+import "./Dashboard.css";
 
 
 const DefaultHome=()=>{
 
-    const userdata=useContext(UserContext);
     const [isAuthenticated,setisAuthenticated]=useState(true);
     
     useEffect(()=>{
@@ -37,7 +35,7 @@ const DefaultHome=()=>{
             return;
         }
         
-    },[userdata]);
+    },[]);
 
     return(<div className="app">
         <Navbar/>
@@ -47,13 +45,13 @@ const DefaultHome=()=>{
                 <Toaster position="top-center"/>
                <Routes>
                     <Route  path="/" element={<Home />}/>
-                    <Route path="cart" element={!isAuthenticated?<NotLoggedinPage/>:<Cart/>}/>
-                    <Route path="profile" element={!isAuthenticated?<NotLoggedinPage/>:<Profile/>}/>
-                    <Route path="sellbook" element={!isAuthenticated?<NotLoggedinPage/>:<SellBook/>}/>
+                    <Route path="cart" element={<Cart/>}/>
+                    <Route path="profile" element={<Profile/>}/>
+                    <Route path="sellbook" element={<SellBook/>}/>
                     <Route path="fictional" element={<FictionalPage/>}/>
                     <Route path="nonfictional" element={<NonFictionalPage/>}/>
                     <Route path="educational" element={<Educational/>}/>
-                    <Route path="explore" element={!isAuthenticated?<NotLoggedinPage/>:<Explore/>}/>
+                    <Route path="explore" element={<Explore/>}/>
                 </Routes>
             </div>
     </div></div>);

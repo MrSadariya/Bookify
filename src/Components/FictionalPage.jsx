@@ -4,18 +4,23 @@ import axios from "axios";
 import Bookbox from "./Bookbox";
 import toast, { Toaster } from "react-hot-toast";
 import SkeletonLoader from "./SkeletonLoader";
+import { SidebarContext } from "../Contexts/SidebarContext";
 
 const FictionalPage=()=>{
+
+    const BASE_URL=process.env.REACT_APP_BASE_URL;
 
     const [bookdata,setbookdata]=useState([]);
     const curr=useContext(CurrentContext);
     const [loading,setLoading]=useState(true);
+    const {isSideBar,setIsSideBar}=useContext(SidebarContext);
 
     useEffect(()=>{
         curr.setcurrent("fictional");
+        setIsSideBar(false);
 
         const fetchBooks=async ()=>{
-            const res=await axios.get("http://localhost:8000/Books/Fictional");
+            const res=await axios.get(`${BASE_URL}/Books/Fictional`);
             if(res.status===200){
                 setbookdata(res.data);
             }else{
@@ -26,21 +31,24 @@ const FictionalPage=()=>{
         fetchBooks();
         setLoading(false);
 
-    },[curr])
+    },[ curr, setIsSideBar])
 
     if(loading){
         return <SkeletonLoader/>
     }
 
     return(
-    <div style={{minHeight:"calc(100vh - 60px)",width:"90vw",display:"flex",flexDirection:"column",alignItems:"center"}}>
+    <div className="home-books-container">
         <Toaster position="top-center"/>
-        <h2 style={{marginTop:"3rem",marginBottom:"3rem"}}>Escape reality-immerse yourself in our gripping fiction tales!</h2>
-        <div className="books-container">
         
-    {bookdata.length!==0 && bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed}/>)}
+        <h2 className="book-thought-div fictional-thought" >Escape reality-immerse yourself in our gripping fiction tales!</h2>
 
-</div></div>);
+        <div className="books-contain books-contain-fictional">
+        {bookdata.length!==0 && bookdata.map((book) =><Bookbox bookid={book._id} key={book._id} BookName={book.BookName} AuthorName={book.AuthorName} Price={book.Price} YearsUsed={book.YearsUsed} {...(book.bookCoverURL && { bookCoverURL: book.bookCoverURL })}/>)}
+        </div>
+
+        
+    </div>);
 }
 
 export default FictionalPage;

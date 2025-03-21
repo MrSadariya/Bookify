@@ -1,0 +1,117 @@
+.bookbox{
+    width: 38vw;
+    height: 25vh;
+    background-color: #101116;
+    border-radius: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    box-shadow:inset 0 0 10px rgba(255,255,255,0);
+    animation: scrollanimate;
+    animation-timeline: view() ;
+    animation-range: entry 0 cover 30%;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+    margin: 1rem;
+}
+
+.bookbox:hover{
+    box-shadow:inset 0 0 20px  rgba(255,255,255,0.8); 
+}
+
+@keyframes scrollanimate {
+    from{
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+}
+
+.bookimgdiv{
+    height: 80%;
+    width:30%;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgbuybutton{
+    position: absolute;
+    right: 1rem;
+    height: 3rem;
+    width: 3rem;
+}
+
+.imgbuybutton> button{
+    height: 100%;
+    width: 100%;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 0.1rem;
+    font-size: 1rem;
+    transition-property: all;
+    transition-timing-function: ease-in;
+    transition-duration: 0.2s;
+}
+
+.imgbuybutton button:hover{
+    cursor: pointer;
+    background-color: rgb(2, 75, 2);
+}
+
+.bookdetaildiv{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    
+}
+
+.bookimgdiv img{
+    height: 100%;
+    width: auto;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+
+@media (min-width: 769px) {
+    
+    
+    
+}
+  
+@media (max-width: 768px) {
+
+    .bookbox{
+        width: 90vw;
+        height: 20vh;
+        font-size: 0.7rem;
+    }
+
+    .imgbuybutton{
+        position: absolute;
+        right: 1rem;
+        height: 2rem;
+        width: 2rem;
+        font-size: 0.7rem;
+    }
+
+
+
+ 
+   
+   
+}

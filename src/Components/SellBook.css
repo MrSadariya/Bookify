@@ -1,0 +1,99 @@
+/* Base styles for the SellBook component */
+.sellbookdiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    width: 85vw;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Form styles */
+  .sellbookdiv form {
+    width: 90%;
+    max-width: 500px;
+    /* height: 98%; */
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sellbookdiv form div {
+    margin-bottom: 0.8rem;
+  }
+  
+  .sellbookdiv label {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .sellbookdiv input,
+  .sellbookdiv select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .sellbookdiv button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .sellbookdiv button:hover {
+    background-color: #357ae8;
+  }
+  
+  @media (max-width: 768px) {
+    .sellbookdiv {
+      width: 100vw;
+      height: 90vh;
+      padding: 10px;
+    }
+    
+    .sellbookdiv form {
+      padding: 1rem;
+    }
+    
+    .sellbookdiv input,
+    .sellbookdiv select {
+      padding: 0.6rem;
+    }
+    
+    .sellbookdiv button {
+      padding: 0.6rem 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .sellbookdiv form {
+      padding: 1rem;
+    }
+    
+    .sellbookdiv form div {
+      margin-bottom: 1rem;
+    }
+    
+    .sellbookdiv label {
+      font-size: 0.9rem;
+    }
+    
+    .sellbookdiv input,
+    .sellbookdiv select,
+    .sellbookdiv button {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+  }

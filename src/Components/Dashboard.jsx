@@ -1,10 +1,10 @@
 import {React,useContext} from "react";
 // import './navstyle.css';
+import "./Dashboard.css";
 import {NavLink} from 'react-router-dom';
 import { CurrentContext } from "../Contexts/CurrentContext";
 
 const Dashboard=(props)=>{
-
 
   const curr=useContext(CurrentContext);
 
@@ -17,11 +17,11 @@ const Dashboard=(props)=>{
     return(
         <div>
           <div className="dashboard">
-            <div style={divstyle1}><NavLink className="link" to="/home/sellbook">Sell Book</NavLink></div>
-            <div style={divstyle2}><NavLink className="link" to="/home/fictional">Fictional</NavLink></div>
-            <div style={divstyle3}><NavLink className="link" to="/home/nonfictional">NonFictional</NavLink></div>
-            <div style={divstyle4}><NavLink className="link" to="/home/educational">Educational</NavLink></div>
-            <div style={divstyle5}><NavLink className="link" to="/home/explore">Explore</NavLink></div>
+            <div style={divstyle1}><NavLink className="link-dashboard" to="/home/sellbook">Sell Book</NavLink></div>
+            <div style={divstyle2}><NavLink className="link-dashboard" to="/home/fictional">Fictional</NavLink></div>
+            <div style={divstyle3}><NavLink className="link-dashboard" to="/home/nonfictional">NonFictional</NavLink></div>
+            <div style={divstyle4}><NavLink className="link-dashboard" to="/home/educational">Educational</NavLink></div>
+            <div style={divstyle5}><NavLink className="link-dashboard" to="/home/explore">Explore</NavLink></div>
           </div>
         </div>
     );

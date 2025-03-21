@@ -92,3 +92,23 @@
 
 }
 
+.explore-mainheading{
+    font-weight: 800;
+    font-size: 1.5rem;
+    text-align: center;
+
+}
+
+.explore-subheading{
+    font-weight: 800;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.priceInputContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

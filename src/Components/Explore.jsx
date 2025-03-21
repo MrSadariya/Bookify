@@ -6,10 +6,14 @@ import axios from "axios";
 import SearchedBookBox from "./SearchedBookBox";
 import defaulImgURL from '../Static/productnotfound.png';
 import toast, { Toaster } from "react-hot-toast";
+import { SidebarContext } from "../Contexts/SidebarContext";
+import NotLoggedinPage from "./NotLoggedinPage";
 
 const Explore=()=>{
 
     const curr=useContext(CurrentContext);
+    const [isAuthenticated,setisAuthenticated]=useState(true);
+    const {isSideBar,setIsSideBar}=useContext(SidebarContext);
 
     const [isSearching,setisSearching]=useState(0);
 
@@ -35,16 +39,26 @@ const Explore=()=>{
         setisSearching(0);
         setprice("");
     }
-  
+
     useEffect(()=>{
-            curr.setcurrent("explore");
-    },[curr])
+        curr.setcurrent("explore");
+        setIsSideBar(false);
+        const token=localStorage.getItem("token");
+        if(!token){
+            setisAuthenticated(false);
+            return;
+        }
+    },[curr, setIsSideBar])
+
+    if(!isAuthenticated){
+        return <NotLoggedinPage/>;
+    }
 
     return(
         <div className="eContainer">
             <Toaster position="top-center"/>
-            <h2 style={{marginTop:"1rem",fontWeight:"800"}}>Book Genie</h2>
-            <h4 style={{marginTop:"1rem"}}>Choose Options , and Get Book Suggestions</h4>
+            <div className="explore-mainheading" style={{marginTop:"1rem",fontWeight:"800"}}>Book Genie</div>
+            <div className="explore-subheading" style={{marginTop:"1rem"}}>Choose Options , and Get Book Suggestions</div>
 
             <div className="priceInputContainer">
                 <h2>Search For Book</h2>
@@ -56,10 +70,12 @@ const Explore=()=>{
             {isSearching===1 && <button disabled={true} className="searchBtn" onClick={handleSearch}>Searched</button> }
             
             <div className="searchedBookContainer">
-            {resBooks && resBooks.map((book, index) => (
+            {resBooks.length!==0 && resBooks.map((book, index) => (
             <SearchedBookBox title={book.volumeInfo.title} imageURL={book.volumeInfo.imageLinks?.thumbnail || defaulImgURL} key={book.id} id={book.id} author={book.volumeInfo.authors[0]} publisher={book.volumeInfo.publisher || "--"} date={book.volumeInfo.publishedDate || "--"} previewLink={book.volumeInfo.previewLink}/>
             ))}
             </div>
+            
+            
 
 
         </div>

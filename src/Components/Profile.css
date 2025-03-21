@@ -1,0 +1,263 @@
+.profilediv-main{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-main{
+    margin-top: 2rem;
+    width: 80%;
+    height: 40vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #101116;
+    border-radius: 1rem;
+}
+
+.profile-photo{
+    /* width: 20%; */
+    height: 15vw;
+    border-radius: 0.5rem;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-photo img{
+    
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.profile-photo-editBtn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(50%,50%);
+    font-size: 2rem;
+    color: silver;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.profile-photo-editBtn:hover{
+    cursor: pointer;
+    color: rgb(90, 89, 89);
+}
+
+
+
+.user-detail{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.user-bookcount{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.user-bookcount>div{
+    height: 8rem;
+    width: 8rem;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 1rem;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+    font-size: 1.5rem;
+    font-weight: 800;
+    
+}
+
+.user-bookcount>div:hover{
+    background-color: rgb(48, 47, 47);
+    color: white;
+}
+
+.user-detail-name{
+    text-align: center;
+}
+
+.user-detail-mail{
+    text-align: center;
+}
+
+.user-bookcount-heading{
+    text-align: center;
+}
+
+.userHistory{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    margin-top: 4rem;
+    
+    
+}
+
+.booksolddropdown{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userHistory-btn{
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    border: none;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.booksold-content{
+    background-color: #101116;
+    color: white;
+    font-size: 1rem;
+    width:60%;
+    border-radius: 0.5rem;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height:25vh;
+    overflow-y: scroll;
+}
+
+.booksold-content::-webkit-scrollbar{
+    display: none;
+}
+
+.booksold-content div{
+    width:100%;
+    height:2.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 1rem;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+}
+
+.booksold-content div:hover{
+    background-color: #343748;
+}
+
+
+
+@media (max-width: 768px) {
+
+    .profilediv-main{
+        min-height: 100vh;
+    }
+
+    .profile-main{
+        margin-top: 2rem;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 80vh;
+        justify-content: initial;
+    }
+
+    .profile-photo{
+        top: initial;
+        transform: initial;
+        min-height: 23vh;
+        /* width: 60%; */
+        margin-top: 2rem;
+        
+    }
+
+    .user-detail{
+        width: 100%;
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-bookcount{
+        margin-top: 2rem;
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+
+    .user-bookcount>div{
+        width: 28vw;
+        height: 25vw; 
+        max-width: 150px;
+        max-height: 150px;  
+        font-size: 0.8rem;
+        margin: 0.5rem;
+    }
+
+    .user-bookcount-heading{
+        text-align: center;
+    }
+
+    .userHistory{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .booksolddropdown{
+        width: 100%;
+    }
+
+    .userHistory-btn{
+        width: 90%;
+        margin: 1rem;
+    }
+
+    .booksold-content{
+        width: 90%;
+        font-size: 0.9rem;
+    }
+
+    .lastDiv{
+        margin-bottom: 4rem;
+    }
+
+
+
+
+
+}

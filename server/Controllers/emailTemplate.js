@@ -19,7 +19,7 @@ const VERIFICATION_EMAIL_TEMPLATE = `
     <p>Enter this code on the verification page to complete your registration.</p>
     <p>This code will expire in 15 minutes for security reasons.</p>
     <p>If you didn't create an account with us, please ignore this email.</p>
-    <p>Best regards,<br>Your App Team</p>
+    <p>Best regards,<br>Bookify Service</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
     <p>This is an automated message, please do not reply to this email.</p>
@@ -79,13 +79,13 @@ const PASSWORD_RESET_REQUEST_TEMPLATE = `
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
     <p>Hello,</p>
-    <p>We received a request to reset your password. If you didn't make this request, please ignore this email.</p>
-    <p>To reset your password, click the button below:</p>
+    <p>Your Reset Verification code is:</p>
     <div style="text-align: center; margin: 30px 0;">
-      <a href="{resetURL}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+      <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">{ResetverificationCode}</span>
     </div>
-    <p>This link will expire in 1 hour for security reasons.</p>
-    <p>Best regards,<br>Your App Team</p>
+    <p>Enter this code on the Forget Password verification page to proceed.</p>
+    <p>This OTP will expire in 1 hour for security reasons.</p>
+    <p>Best regards,<br>Bookify Service</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
     <p>This is an automated message, please do not reply to this email.</p>

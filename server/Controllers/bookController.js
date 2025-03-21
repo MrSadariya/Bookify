@@ -61,7 +61,7 @@ const addBook=async(req,res)=>{
             return res.status(401).json({message:"Unauthorised Access"});
         }
         const body=req.body;
-        await Book.create({BookName:body.BookName,AuthorName:body.AuthorName,Price:body.Price,YearsUsed:body.YearsUsed,BookType:body.BookType,SellerEmail:user.Email});
+        await Book.create({BookName:body.BookName,AuthorName:body.AuthorName,Price:body.Price,YearsUsed:body.YearsUsed,BookType:body.BookType,SellerEmail:user.Email,bookCoverURL:body.bookCoverURL});
         return res.status(200).json({message:"Book put on sold succesfully!!"});
     }catch(err){
         console.log(err);
