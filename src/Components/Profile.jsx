@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 const ProfilePicModal = ({ isOpen, onClose, onSubmit,setExternalUrl  }) => {
     const [profileUrl, setProfileUrl] = useState('');
   
-    // Close modal with escape key
     useEffect(() => {
       const handleEscKey = (event) => {
         if (event.key === 'Escape' && isOpen) {
@@ -25,8 +24,7 @@ const ProfilePicModal = ({ isOpen, onClose, onSubmit,setExternalUrl  }) => {
       };
   
       window.addEventListener('keydown', handleEscKey);
-      
-      // Prevent scrolling when modal is open
+   
       if (isOpen) {
         document.body.style.overflow = 'hidden';
       } else {

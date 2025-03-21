@@ -123,8 +123,7 @@
   .profile-pic-edit-button:hover {
     background-color: #3a7bc8;
   }
-  
-  /* Responsive styles */
+
   @media (max-width: 600px) {
     .profile-modal-content {
       padding: 20px;

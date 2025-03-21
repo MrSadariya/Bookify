@@ -11,7 +11,7 @@ const ForgetPassword = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [userOTP, setUserOTP] = useState(["", "", "", "", "", ""]);
-    const [currentStep, setCurrentStep] = useState("email"); // email, otp, resetPassword
+    const [currentStep, setCurrentStep] = useState("email"); 
     const [isLoading, setIsLoading] = useState(false);
     const inputRefs = useRef([]);
 
@@ -45,7 +45,6 @@ const ForgetPassword = () => {
         const newOTP = [...userOTP];
 
         if (value.length > 1) {
-            // Handle paste event
             const pastedCode = value.slice(0, 6).split("");
             for (let i = 0; i < 6; i++) {
                 newOTP[i] = pastedCode[i] || "";

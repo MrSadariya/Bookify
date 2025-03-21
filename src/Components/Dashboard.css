@@ -152,9 +152,6 @@
     left:15vw;
 }
 
-.signout-div{
-
-}
 
 .signout-div button{
     background-color: inherit;
@@ -186,7 +183,7 @@
     }
       
     .sidebar.active {
-        transform: translateX(0); /* Show sidebar when active */
+        transform: translateX(0);
     }
 
     .dashboard{

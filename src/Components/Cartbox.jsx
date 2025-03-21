@@ -12,16 +12,6 @@ import defaultBookPic from "../Static/productnotfound.png";
     const navigate=useNavigate();
 
     const handleIncrement=async()=>{
-        
-    //     const token=localStorage.getItem("token");
-    //    const res=await axios.get(`http://localhost:8000/cart/incrementItem/${props.bookid}`,{
-    //     headers:{Authorization:`Bearer ${token}`},withCredentials:true
-    //     });
-    //    if(res.status===200){
-
-    //    }else{
-    //     toast.error(res.data.message,{duration:4000});
-    //    }
       return;
     };
 
