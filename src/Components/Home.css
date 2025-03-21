@@ -47,7 +47,7 @@
 }
 
 .best-container div:nth-child(1){
-    background: url("/Static/educational.png");
+    background: url("../Static/educational.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -55,7 +55,7 @@
 }
 
 .best-container div:nth-child(2){
-    background: url("/Static/magazine.jpg");
+    background: url("../Static/magazine.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -63,7 +63,7 @@
 }
 
 .best-container div:nth-child(3){
-    background: url("/Static/fictional.jpg");
+    background: url("../Static/fictional.jpg");
     
     background-repeat: no-repeat;
     background-position: center center;
@@ -72,7 +72,7 @@
 }
 
 .best-container div:nth-child(4){
-    background: url("/Static/open-book.jpg");
+    background: url("../Static/open-book.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -80,7 +80,7 @@
 }
 
 .best-container div:nth-child(5){
-    background: url("/Static/nonfictional.jpg");
+    background: url("../Static/nonfictional.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -88,7 +88,7 @@
 }
 
 .best-container div:nth-child(6){
-    background: url("/Static/dark-gloomy-books-pages_1084x668.jpg");
+    background: url("../Static/dark-gloomy-books-pages_1084x668.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
