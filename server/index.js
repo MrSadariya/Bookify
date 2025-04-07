@@ -15,6 +15,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
+app.get("/",(req,res)=>{
+  return res.json({message:"Hello from Server"});
+})
+
 const authRoutes=require('./Routes/authRoutes');
 const bookRoutes=require('./Routes/bookRoutes');
 const cartRoutes=require('./Routes/cartRoutes');
