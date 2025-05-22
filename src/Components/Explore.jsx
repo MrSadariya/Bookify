@@ -71,7 +71,7 @@ const Explore=()=>{
             
             <div className="searchedBookContainer">
             {resBooks.length!==0 && resBooks.map((book, index) => (
-            <SearchedBookBox title={book.volumeInfo.title} imageURL={book.volumeInfo.imageLinks?.thumbnail || defaulImgURL} key={book.id} id={book.id} author={book.volumeInfo.authors[0]} publisher={book.volumeInfo.publisher || "--"} date={book.volumeInfo.publishedDate || "--"} previewLink={book.volumeInfo.previewLink}/>
+            <SearchedBookBox title={book.volumeInfo.title} imageURL={book.volumeInfo.imageLinks?.thumbnail || defaulImgURL} key={book.id} id={book.id} author={book.volumeInfo.authors?.[0]||"--"} publisher={book.volumeInfo.publisher || "--"} date={book.volumeInfo.publishedDate || "--"} previewLink={book.volumeInfo.previewLink}/>
             ))}
             </div>
             
