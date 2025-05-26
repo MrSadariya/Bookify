@@ -1,4 +1,3 @@
-const { Book } = require('lucide-react');
 const mongoose=require('./db');
 
 const BooksSchema=new mongoose.Schema({
