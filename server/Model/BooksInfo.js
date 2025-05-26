@@ -1,3 +1,4 @@
+const { Book } = require('lucide-react');
 const mongoose=require('./db');
 
 const BooksSchema=new mongoose.Schema({
@@ -24,6 +25,9 @@ const BooksSchema=new mongoose.Schema({
         required:true
     },
     bookCoverURL:{
+        type:String
+    },
+    BookDescription:{
         type:String
     }
 

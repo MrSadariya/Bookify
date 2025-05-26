@@ -78,6 +78,7 @@ const Cart=()=>{
 
         const fetchItems=async()=>{
             try {
+                setLoading(true);
                 const res = await axios.get(`${BASE_URL}/cart/getitems`,{
                     headers:{Authorization:`Bearer ${token}`},withCredentials:true
                 });
@@ -97,12 +98,13 @@ const Cart=()=>{
                 }
             } catch (error) {
                 toast.error("Some Error has occured!!, Try Again.",{duration:5000})  
+            }finally{
+                setLoading(false);
             }
 
         }
-        setLoading(true);
+       
         fetchItems();
-        setLoading(false);
 
     },[curr])
 

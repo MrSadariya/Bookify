@@ -13,6 +13,7 @@ import Cart from "./Cart";
 import Profile from "./Profile";
 import { jwtDecode } from "jwt-decode";
 import  { Toaster } from "react-hot-toast";
+import BookAlone from "./BookAlone";
 import "./Dashboard.css";
 
 
@@ -52,6 +53,7 @@ const DefaultHome=()=>{
                     <Route path="nonfictional" element={<NonFictionalPage/>}/>
                     <Route path="educational" element={<Educational/>}/>
                     <Route path="explore" element={<Explore/>}/>
+                    <Route path="/book/:bookID" element={<BookAlone />} />
                 </Routes>
             </div>
     </div></div>);

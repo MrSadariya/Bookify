@@ -61,7 +61,7 @@ const addBook=async(req,res)=>{
             return res.status(401).json({message:"Unauthorised Access"});
         }
         const body=req.body;
-        await Book.create({BookName:body.BookName,AuthorName:body.AuthorName,Price:body.Price,YearsUsed:body.YearsUsed,BookType:body.BookType,SellerEmail:user.Email,bookCoverURL:body.bookCoverURL});
+        await Book.create({BookName:body.BookName,AuthorName:body.AuthorName,Price:body.Price,YearsUsed:body.YearsUsed,BookType:body.BookType,SellerEmail:user.Email,bookCoverURL:body.bookCoverURL,BookDescription:body.BookDescription});
         return res.status(200).json({message:"Book put on sold succesfully!!"});
     }catch(err){
         console.log(err);
@@ -69,4 +69,15 @@ const addBook=async(req,res)=>{
     }
 }
 
-module.exports={getAllBooks,getParticularBooks,getSoldBooks,getPendingBooks,addBook};
+const getParticularBook=async(req,res)=>{
+    try{
+        const bookID=req.params.bookID;
+        const book=await Book.findOne({_id:bookID});
+        return res.status(200).json(book);
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({message:"Server Error!!"});
+    }
+}
+
+module.exports={getAllBooks,getParticularBooks,getSoldBooks,getPendingBooks,addBook,getParticularBook};

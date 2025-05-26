@@ -20,17 +20,23 @@ const Educational=()=>{
         setIsSideBar(false);
 
         const fetchBooks=async ()=>{
-            const res=await axios.get(`${BASE_URL}/Books/Educational`);
-            if(res.status===200){
-                setbookdata(res.data);
-            }else{
-                toast.error(res.data.message,{duration:4000});
-            }
-        }
-        setLoading(true);
-        fetchBooks();
-        setLoading(false);
+            try{
+                setLoading(true);
+                const res=await axios.get(`${BASE_URL}/Books/Educational`);
+                if(res.status===200){
+                    setbookdata(res.data);
+                }else{
+                    toast.error(res.data.message,{duration:4000});
+                }
 
+            }catch(err){
+                console.log(err);
+            }finally{
+                setLoading(false);
+            }
+            
+        }
+        fetchBooks();
     },[curr, setIsSideBar])
 
     if(loading){

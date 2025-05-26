@@ -24,6 +24,7 @@ const SellBook=()=>{
         YearsUsed: "",
         bookCoverURL:"",
         BookType: "Fictional",
+        BookDescription: "",
     });
 
     const handleChange = (e) => {
@@ -72,6 +73,7 @@ const SellBook=()=>{
                     YearsUsed: "",
                     bookCoverURL:"",
                     BookType: "Fictional",
+                    BookDescription: "",
                 })
             }else{
                 toast.error(res.data.message,{duration:3000});
@@ -125,6 +127,17 @@ const SellBook=()=>{
                   <option value="NonFictional">NonFictional</option>
                   <option value="Educational">Educational</option>
             </select> 
+            </div>
+
+            <div>
+                <label>Book Description</label>
+                <textarea
+                    name="BookDescription"
+                    placeholder="Enter a brief description of the book"
+                    value={formData.BookDescription}
+                    onChange={handleChange}
+                    required
+                />
             </div>
             
             <div>

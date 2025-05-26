@@ -5,11 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-hot-toast';
 import "./Bookbox.css";
+import { useNavigate } from 'react-router-dom';
 import defaultBookPic from "../Static/productnotfound.png"
 
 const Bookbox=(props)=>{
 
   const BASE_URL=process.env.REACT_APP_BASE_URL;
+  const navigate = useNavigate();
+
+  const handleBookClick = () => {
+    navigate(`/home/book/${props.bookid}`);
+  };
 
 const handleAddItem = async () => {
   const token=localStorage.getItem("token");
@@ -44,7 +50,7 @@ const handleAddItem = async () => {
 };
 
 
-    return(<div className="bookbox">
+    return(<div className="bookbox" onClick={handleBookClick}>
       <div className="bookimgdiv">
         <img src={props.bookCoverURL?props.bookCoverURL:defaultBookPic} alt="Book-Pic"></img>
       </div>

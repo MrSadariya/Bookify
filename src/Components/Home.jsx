@@ -31,8 +31,9 @@ const Home=()=>{
         setLoading(true);
         axios.get(`${BASE_URL}/Books/All`).then((res)=>{
             setbookdata(res.data);
+            setLoading(false);
         })
-        setLoading(false);
+        
     },[curr])
 
     if(loading){

@@ -20,17 +20,22 @@ const FictionalPage=()=>{
         setIsSideBar(false);
 
         const fetchBooks=async ()=>{
-            const res=await axios.get(`${BASE_URL}/Books/Fictional`);
-            if(res.status===200){
-                setbookdata(res.data);
-            }else{
-                toast.error(res.data.message,{duration:4000});
+            try{
+                setLoading(true);
+                const res=await axios.get(`${BASE_URL}/Books/Fictional`);
+                if(res.status===200){
+                    setbookdata(res.data);
+                }else{
+                    toast.error(res.data.message,{duration:4000});
+                }
+            }catch(err){
+                console.log(err);
+            }finally{
+                setLoading(false);
             }
+            
         }
-        setLoading(true);
         fetchBooks();
-        setLoading(false);
-
     },[ curr, setIsSideBar])
 
     if(loading){
