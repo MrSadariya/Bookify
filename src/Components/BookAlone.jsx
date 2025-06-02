@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import './BookAlone.css';
 
 const BookAlone = () => {
     const { bookID } = useParams();
+    const navigate = useNavigate();
     const [book, setBook] = useState(null);
+    const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [recommendationsLoading, setRecommendationsLoading] = useState(true);
     const [imageLoading, setImageLoading] = useState(true);
     const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const RECOMMENDER_SERVICE=process.env.REACT_APP_RECOMMENDER_SERVICE_URL;
 
     useEffect(() => {
         setLoading(true);
@@ -24,6 +28,21 @@ const BookAlone = () => {
                 setLoading(false);
             });
     }, [bookID, BASE_URL]);
+
+    useEffect(() => {
+        if (book) {
+            setRecommendationsLoading(true);
+            axios.post(`${RECOMMENDER_SERVICE}/recommend`,{"query":book.BookDescription || book.BookName+" "+book.BookType,"top_n":5})
+                .then((res) => {
+                    setRecommendations(res.data.recommendations); 
+                    setRecommendationsLoading(false);
+                })
+                .catch((error) => {
+                    console.error('Error loading recommendations:', error);
+                    setRecommendationsLoading(false);
+                });
+        }
+    }, [book, bookID, BASE_URL]);
 
 const handleAddToCart = async () => {
   const token=localStorage.getItem("token");
@@ -64,6 +83,10 @@ const handleAddToCart = async () => {
     const handleImageError = (e) => {
         e.target.src = '/default-book-cover.jpg';
         setImageLoading(false);
+    };
+
+    const handleRecommendationClick = (isbn13) => {
+        navigate(`/home/recommendedBook/${isbn13}`);
     };
 
     if (loading) {
@@ -154,6 +177,47 @@ const handleAddToCart = async () => {
                         </button>
                     </div>
                 </div>
+            </div>
+
+            {/* Recommendations Section */}
+            <div className="alone-recommendations-section">
+                <h2 className="alone-recommendations-title">You Might Also Like</h2>
+                
+                {recommendationsLoading ? (
+                    <div className="alone-recommendations-loading">
+                        <div className="alone-loading-spinner"></div>
+                        <span>Loading recommendations...</span>
+                    </div>
+                ) : (
+                    <div className="alone-recommendations-container">
+                        <div className="alone-recommendations-scroll">
+                            {recommendations.map((recBook) => (
+                                <div 
+                                    key={recBook.isbn13} 
+                                    className="alone-recommendation-card"
+                                    onClick={() => handleRecommendationClick(recBook.isbn13)}
+                                >
+                                    <div className="alone-rec-image-container">
+                                        <img 
+                                            src={recBook.thumbnail || '/default-book-cover.jpg'} 
+                                            alt={recBook.title_subtitle}
+                                            className="alone-rec-image"
+                                            onError={(e) => {
+                                                e.target.src = '/default-book-cover.jpg';
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="alone-rec-details">
+                                        <h4 className="alone-rec-title">{recBook.title_subtitle}</h4>
+                                        <p className="alone-rec-author">by {recBook.authors}</p>
+                                        <p className="alone-rec-category">{recBook.categories}</p>
+                                        <p className="alone-rec-price">{recBook.average_rating}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

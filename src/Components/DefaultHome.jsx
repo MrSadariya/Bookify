@@ -15,6 +15,7 @@ import { jwtDecode } from "jwt-decode";
 import  { Toaster } from "react-hot-toast";
 import BookAlone from "./BookAlone";
 import "./Dashboard.css";
+import RecommendedAloneBook from "./RecommendedBookAlone";
 
 
 const DefaultHome=()=>{
@@ -54,6 +55,7 @@ const DefaultHome=()=>{
                     <Route path="educational" element={<Educational/>}/>
                     <Route path="explore" element={<Explore/>}/>
                     <Route path="/book/:bookID" element={<BookAlone />} />
+                    <Route path="/recommendedBook/:isbn13" element={<RecommendedAloneBook/>}/>
                 </Routes>
             </div>
     </div></div>);
